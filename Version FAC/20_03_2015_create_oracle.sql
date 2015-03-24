@@ -1,4 +1,4 @@
---commentaire
+
 
 CREATE TABLE UTILISATEUR (
 	id_user INTEGER NOT NULL,
