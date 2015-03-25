@@ -32,7 +32,7 @@ create sequence sem;
 INSERT INTO semestre VALUES(sem.nextval, 'S1', 'DUT informatique', 2014, to_date('09-01', 'MM-DD'), to_date('01-10', 'MM-DD'));
 INSERT INTO semestre VALUES(sem.nextval, 'S2', 'DUT informatique', 2014, to_date('01-12', 'MM-DD'), to_date('06-17', 'MM-DD'));
 
-drop sequence sem;
+-- drop sequence sem;
 
 -- TYPE NOTE
 INSERT INTO type_note VALUES ('CC', 0.4);
@@ -100,8 +100,8 @@ INSERT INTO groupe VALUES(gr.nextval, 'Info 2014');
 	INSERT INTO etudiant VALUES(id.currval, num.nextval);
 		INSERT INTO etudiant_dans_groupe VALUES(id.currval, gr.currval);
 
-drop sequence num;
-drop sequence id;
+-- drop sequence num;
+-- drop sequence id;
 
 
 -- ENSEIGNEMENTS/GROUPE_SUIT_ENSEIGNEMENT/NOTES
@@ -225,8 +225,8 @@ INSERT INTO enseignement VALUES(ens.nextval,1 , 'Anglais',10, 2.5);
 INSERT INTO enseignement VALUES(ens.nextval,2 , 'Anglais',10, 2.5);
 	INSERT INTO groupe_suit_enseignement(id_groupe, id_enseignement) VALUES (gr.currval, ens.currval);
 
-drop sequence gr;
-drop sequence etu;
-drop sequence ens;
-drop sequence note;
+-- drop sequence gr;
+-- drop sequence etu;
+-- drop sequence ens;
+-- drop sequence note;
 
