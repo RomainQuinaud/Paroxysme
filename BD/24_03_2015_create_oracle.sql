@@ -134,6 +134,7 @@ CREATE TABLE NOTES (
 	CONSTRAINT PK_NOTES PRIMARY KEY (id_note),
 	CONSTRAINT FK_NOTES_GP_SUIT_ENSEIGNEMENT FOREIGN KEY (id_groupe, id_enseignement) REFERENCES GROUPE_SUIT_ENSEIGNEMENT(id_groupe, id_enseignement),
 	CONSTRAINT FK_NOTES_ETUDIANT FOREIGN KEY (id_user) REFERENCES ETUDIANT(id_user),
+	CONSTRAINT FK_NOTES_TYPE_NOTE FOREIGN KEY (type_note) REFERENCES TYPE_NOTE(type_note),
 	CONSTRAINT UNIQUE_NOTES UNIQUE (id_user, id_enseignement, libelle_interrogation), -- pas deux notes pour une même interro
 	CONSTRAINT CHECK_NOTES CHECK (valeur_note BETWEEN 0 AND 20)
 	-- plein de choses à faire ici
