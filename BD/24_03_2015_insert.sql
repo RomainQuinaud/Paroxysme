@@ -362,7 +362,7 @@ INSERT INTO enseignement VALUES(ens.nextval,1 , 'ACSI',5, 2);
 		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
 		(note.nextval, etu.nextval,1, ens.currval, 'Interro d''ASCI n°1', to_date('2014-10-22', 'YYYY-MM-DD'), 9, 1, 'CC');
 		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
-		(note.nextval, etu.nextval,1, ens.currval, 'Interro d''ASCI n°1', to_date('2014-10-22', 'YYYY-MM-DD'), 13 1, 'CC');
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro d''ASCI n°1', to_date('2014-10-22', 'YYYY-MM-DD'), 13, 1, 'CC');
 		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
 		(note.nextval, etu.nextval,1, ens.currval, 'Interro d''ASCI n°1', to_date('2014-10-22', 'YYYY-MM-DD'), 14, 1, 'CC');
 		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
@@ -606,7 +606,7 @@ INSERT INTO enseignement VALUES(ens.nextval,1 ,'Communication',9, 2.5);
 		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
 		(note.nextval, etu.nextval,1, ens.currval, 'Interro de communication n°1', to_date('2014-10-04', 'YYYY-MM-DD'), 13, 1, 'CC');
 		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
-		(note.nextval, etu.nextval,1, ens.currval, 'Interro de communication n°1', to_date('2014-10-04', 'YYYY-MM-DD'), 15 1, 'CC');
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro de communication n°1', to_date('2014-10-04', 'YYYY-MM-DD'), 15, 1, 'CC');
 		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
 		(note.nextval, etu.nextval,1, ens.currval, 'Interro de communication n°1', to_date('2014-10-04', 'YYYY-MM-DD'), 12, 1, 'CC');
 		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
@@ -664,7 +664,7 @@ INSERT INTO enseignement VALUES(ens.nextval,1 , 'Anglais',10, 2.5);
 		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
 		(note.nextval, etu.nextval,1, ens.currval, 'Interro d''anglais n°1', to_date('2014-10-15', 'YYYY-MM-DD'), 14, 1, 'CC');
 		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
-		(note.nextval, etu.nextval,1, ens.currval, 'Interro d''anglais n°1', to_date('2014-10-15', 'YYYY-MM-DD'), 12 1, 'CC');
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro d''anglais n°1', to_date('2014-10-15', 'YYYY-MM-DD'), 12, 1, 'CC');
 		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
 		(note.nextval, etu.nextval,1, ens.currval, 'Interro d''anglais n°1', to_date('2014-10-15', 'YYYY-MM-DD'), 17, 1, 'CC');
 		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
