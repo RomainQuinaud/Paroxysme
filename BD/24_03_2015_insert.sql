@@ -174,10 +174,37 @@ INSERT INTO enseignement VALUES(ens.nextval,1 , 'Algorithmique',1, 3);
 INSERT INTO enseignement VALUES(ens.nextval,2 , 'Algorithmique',2, 3);
 	INSERT INTO groupe_suit_enseignement(id_groupe, id_enseignement) VALUES (gr.currval, ens.currval);
 
+	INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro d''Algorithmique n°1', to_date('2015-01-28', 'YYYY-MM-DD'), 13, 1, 'CC');
+		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro d''Algorithmique n°1', to_date('2015-01-28', 'YYYY-MM-DD'), 15.5, 1, 'CC');
+		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro d''Algorithmique n°1', to_date('2015-01-28', 'YYYY-MM-DD'), 12.5, 1, 'CC');
+		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro d''Algorithmique n°1', to_date('2015-01-28', 'YYYY-MM-DD'), 11, 1, 'CC');
+		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro d''Algorithmique n°1', to_date('2015-01-28', 'YYYY-MM-DD'), 13, 1, 'CC');
+		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro d''Algorithmique n°1', to_date('2015-01-28', 'YYYY-MM-DD'), 10, 1, 'CC');
+		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro d''Algorithmique n°1', to_date('2015-01-28', 'YYYY-MM-DD'), 15, 1, 'CC');
+		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro d''Algorithmique n°1', to_date('2015-01-28', 'YYYY-MM-DD'), 12.5, 1, 'CC');
+		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro d''Algorithmique n°1', to_date('2015-01-28', 'YYYY-MM-DD'), 12.5, 1, 'CC');
+		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro d''Algorithmique n°1', to_date('2015-01-28', 'YYYY-MM-DD'), 17, 1, 'CC');
+		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro d''Algorithmique n°1', to_date('2015-01-28', 'YYYY-MM-DD'), 18, 1, 'CC');
+		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro d''Algorithmique n°1', to_date('2015-01-28', 'YYYY-MM-DD'), 13, 1, 'CC');
+		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro d''Algorithmique n°1', to_date('2015-11-28', 'YYYY-MM-DD'), 10, 1, 'CC');
+
 INSERT INTO enseignement VALUES(ens.nextval,1 , 'Programmation OO',2, 3);
 	INSERT INTO groupe_suit_enseignement(id_groupe, id_enseignement) VALUES (gr.currval, ens.currval);
 
-	INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
 		(note.nextval, etu.nextval,1, ens.currval, 'Interro de Programmation n°1', to_date('2014-10-05', 'YYYY-MM-DD'), 10, 1, 'CC');
 		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
 		(note.nextval, etu.nextval,1, ens.currval, 'Interro de Programmationn°1', to_date('2014-10-05', 'YYYY-MM-DD'), 15, 1, 'CC');
@@ -234,6 +261,34 @@ INSERT INTO enseignement VALUES(ens.nextval,1 , 'Programmation OO',2, 3);
 
 INSERT INTO enseignement VALUES(ens.nextval,2 , 'Programmation OO',2, 3);
 	INSERT INTO groupe_suit_enseignement(id_groupe, id_enseignement) VALUES (gr.currval, ens.currval);
+
+		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro de Programmation n°1', to_date('2015-02-05', 'YYYY-MM-DD'), 14, 1, 'CC');
+		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro de Programmationn°1', to_date('2015-02-05', 'YYYY-MM-DD'), 12, 1, 'CC');
+		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro de Programmation n°1', to_date('2015-02-05', 'YYYY-MM-DD'), 14, 1, 'CC');
+		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro de Programmation n°1', to_date('2015-02-05', 'YYYY-MM-DD'), 16, 1, 'CC');
+		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro de Programmation n°1', to_date('2015-02-05', 'YYYY-MM-DD'), 13, 1, 'CC');
+		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro de Programmation n°1', to_date('2015-02-05', 'YYYY-MM-DD'), 16, 1, 'CC');
+		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro de Programmation n°1', to_date('2015-02-05', 'YYYY-MM-DD'), 13.5, 1, 'CC');
+		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro de Programmation n°1', to_date('2015-02-05', 'YYYY-MM-DD'), 9, 1, 'CC');
+		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro de Programmation n°1', to_date('2015-02-05', 'YYYY-MM-DD'), 13, 1, 'CC');
+		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro de Programmation n°1', to_date('2015-02-05', 'YYYY-MM-DD'), 16, 1, 'CC');
+		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro de Programmation n°1', to_date('2015-02-05', 'YYYY-MM-DD'), 10.5, 1, 'CC');
+		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro de Programmation n°1', to_date('2015-02-05', 'YYYY-MM-DD'), 11.5, 1, 'CC');
+		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro de Programmation n°1', to_date('2015-02-05', 'YYYY-MM-DD'), 13, 1, 'CC');
+
 	
 INSERT INTO enseignement VALUES(ens.nextval,1 , 'Architecture',3, 2.5);
 	INSERT INTO groupe_suit_enseignement(id_groupe, id_enseignement) VALUES (gr.currval, ens.currval);
@@ -290,7 +345,7 @@ INSERT INTO enseignement VALUES(ens.nextval,1 , 'Architecture',3, 2.5);
 INSERT INTO enseignement VALUES(ens.nextval,1 , 'Système et Réseaux',4, 2.5);
 	INSERT INTO groupe_suit_enseignement(id_groupe, id_enseignement) VALUES (gr.currval, ens.currval);
 
-	INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
 		(note.nextval, etu.nextval,1, ens.currval, 'Interro de Système et Réseaux n°1', to_date('2014-10-16', 'YYYY-MM-DD'), 12, 1, 'CC');
 		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
 		(note.nextval, etu.nextval,1, ens.currval, 'Interro de Système et Réseaux n°1', to_date('2014-10-16', 'YYYY-MM-DD'), 12, 1, 'CC');
@@ -347,6 +402,33 @@ INSERT INTO enseignement VALUES(ens.nextval,1 , 'Système et Réseaux',4, 2.5);
 	
 INSERT INTO enseignement VALUES(ens.nextval,2 , 'Système et Réseaux',4, 2.5);
 	INSERT INTO groupe_suit_enseignement(id_groupe, id_enseignement) VALUES (gr.currval, ens.currval);
+
+	INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro de Système et Réseaux n°1', to_date('2015-02-16', 'YYYY-MM-DD'), 15, 1, 'CC');
+		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro de Système et Réseaux n°1', to_date('2015-02-16', 'YYYY-MM-DD'), 9, 1, 'CC');
+		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro de Système et Réseaux n°1', to_date('2015-02-16', 'YYYY-MM-DD'), 12, 1, 'CC');
+		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro de Système et Réseaux n°1', to_date('2015-02-16', 'YYYY-MM-DD'), 15, 1, 'CC');
+		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro de Système et Réseaux n°1', to_date('2015-02-16', 'YYYY-MM-DD'), 12, 1, 'CC');
+		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro de Système et Réseaux n°1', to_date('2015-02-16', 'YYYY-MM-DD'), 10, 1, 'CC');
+		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro de Système et Réseaux n°1', to_date('2015-02-16', 'YYYY-MM-DD'), 11.5, 1, 'CC');
+		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro de Système et Réseaux n°1', to_date('2015-02-16', 'YYYY-MM-DD'), 15, 1, 'CC');
+		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro de Système et Réseaux n°1', to_date('2015-02-16', 'YYYY-MM-DD'), 12, 1, 'CC');
+		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro de Système et Réseaux n°1', to_date('2015-02-16', 'YYYY-MM-DD'), 11, 1, 'CC');
+		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro de Système et Réseaux n°1', to_date('2015-02-16', 'YYYY-MM-DD'), 10.5, 1, 'CC');
+		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro de Système et Réseaux n°1', to_date('2015-02-16', 'YYYY-MM-DD'), 8.5, 1, 'CC');
+		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro de Système et Réseaux n°1', to_date('2015-02-16', 'YYYY-MM-DD'), 13.5, 1, 'CC');
 	
 INSERT INTO enseignement VALUES(ens.nextval,1 , 'ACSI',5, 2);
 	INSERT INTO groupe_suit_enseignement(id_groupe, id_enseignement) VALUES (gr.currval, ens.currval);
@@ -404,6 +486,33 @@ INSERT INTO enseignement VALUES(ens.nextval,1 , 'ACSI',5, 2);
 	
 INSERT INTO enseignement VALUES(ens.nextval,2 , 'ACSI',6, 2);
 	INSERT INTO groupe_suit_enseignement(id_groupe, id_enseignement) VALUES (gr.currval, ens.currval);
+
+	INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro d''ASCI n°1', to_date('2015-02-24', 'YYYY-MM-DD'), 12, 1, 'CC');
+		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro d''ASCI n°1', to_date('2015-02-24', 'YYYY-MM-DD'), 11, 1, 'CC');
+		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro d''ASCI n°1', to_date('2015-02-24', 'YYYY-MM-DD'), 10, 1, 'CC');
+		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro d''ASCI n°1', to_date('2015-02-24', 'YYYY-MM-DD'), 8, 1, 'CC');
+		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro d''ASCI n°1', to_date('2015-02-24', 'YYYY-MM-DD'), 9, 1, 'CC');
+		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro d''ASCI n°1', to_date('2015-02-24', 'YYYY-MM-DD'), 10, 1, 'CC');
+		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro d''ASCI n°1', to_date('2015-02-24', 'YYYY-MM-DD'), 12, 1, 'CC');
+		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro d''ASCI n°1', to_date('2015-02-24', 'YYYY-MM-DD'), 11, 1, 'CC');
+		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro d''ASCI n°1', to_date('2015-02-24', 'YYYY-MM-DD'), 10, 1, 'CC');
+		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro d''ASCI n°1', to_date('2015-02-24', 'YYYY-MM-DD'), 7.5, 1, 'CC');
+		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro d''ASCI n°1', to_date('2015-02-24', 'YYYY-MM-DD'), 6.5, 1, 'CC');
+		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro d''ASCI n°1', to_date('2015-02-24', 'YYYY-MM-DD'), 15.5, 1, 'CC');
+
+
 	
 INSERT INTO enseignement VALUES(ens.nextval,1 , 'Bases de données',5, 2);
 	INSERT INTO groupe_suit_enseignement(id_groupe, id_enseignement) VALUES (gr.currval, ens.currval);
@@ -465,6 +574,35 @@ INSERT INTO enseignement VALUES(ens.nextval,1 , 'Bases de données',5, 2);
 	
 INSERT INTO enseignement VALUES(ens.nextval,2 , 'Bases de données',5, 2);
 	INSERT INTO groupe_suit_enseignement(id_groupe, id_enseignement) VALUES (gr.currval, ens.currval);
+
+		iNSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro de base de données n°1', to_date('2015-01-22', 'YYYY-MM-DD'), 15, 1, 'CC');
+		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro de base de données n°1', to_date('2015-01-22', 'YYYY-MM-DD'), 12, 1, 'CC');
+		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro de base de données n°1', to_date('2015-01-22', 'YYYY-MM-DD'), 10, 1, 'CC');
+		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro de base de données n°1', to_date('2015-01-22', 'YYYY-MM-DD'), 8, 1, 'CC');
+		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro de base de données n°1', to_date('2015-01-22', 'YYYY-MM-DD'), 7, 1, 'CC');
+		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro de base de données n°1', to_date('2015-01-22', 'YYYY-MM-DD'), 12.5, 1, 'CC');
+		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro de base de données n°1', to_date('2015-01-22', 'YYYY-MM-DD'), 11, 1, 'CC');
+		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro de base de données n°1', to_date('2015-01-22', 'YYYY-MM-DD'), 10, 1, 'CC');
+		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro de base de données n°1', to_date('2015-01-22', 'YYYY-MM-DD'), 14, 1, 'CC');
+		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro de base de données n°1', to_date('2015-01-22', 'YYYY-MM-DD'), 16, 1, 'CC');
+		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro de base de données n°1', to_date('2015-01-22', 'YYYY-MM-DD'), 11.5, 1, 'CC');
+		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro de base de données n°1', to_date('2015-01-22', 'YYYY-MM-DD'), 12.5, 1, 'CC');
+		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro de base de données n°1', to_date('2015-01-22', 'YYYY-MM-DD'), 10.5, 1, 'CC');
+
+
 	
 INSERT INTO enseignement VALUES(ens.nextval,1 , 'Mathématiques',7, 5);
 	INSERT INTO groupe_suit_enseignement(id_groupe, id_enseignement) VALUES (gr.currval, ens.currval);
