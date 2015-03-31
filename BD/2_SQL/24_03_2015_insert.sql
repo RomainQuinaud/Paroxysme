@@ -29,8 +29,8 @@ INSERT INTO formation VALUES('DUT informatique', 2014, 2);
 -- SEMESTRES
 create sequence sem;
 
-INSERT INTO semestre VALUES(sem.nextval, 'S1', 'DUT informatique', 2014, to_date('09-01', 'MM-DD'), to_date('01-10', 'MM-DD'));
-INSERT INTO semestre VALUES(sem.nextval, 'S2', 'DUT informatique', 2014, to_date('01-12', 'MM-DD'), to_date('06-17', 'MM-DD'));
+INSERT INTO semestre VALUES(sem.nextval, 'S1', 'DUT informatique', 2014, to_date('2014-09-01', 'YYYY-MM-DD'), to_date('2015-01-10', 'YYYY-MM-DD'), 0, 0);
+INSERT INTO semestre VALUES(sem.nextval, 'S2', 'DUT informatique', 2014, to_date('2015-01-12', 'YYYY-MM-DD'), to_date('2015-06-17', 'YYYY-MM-DD'), 0, 0);
 
 -- drop sequence sem;
 
