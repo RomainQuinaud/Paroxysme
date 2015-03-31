@@ -31,11 +31,13 @@ CREATE TABLE FORMATION (
 
 CREATE TABLE SEMESTRE (
 	id_semestre INTEGER NOT NULL, -- on est sur qu'un semestre est unique (il peut y avoir deux S1 dans la table pour deux formations différentes)
-	nom_semestre VARCHAR2(10), -- nom automatique S1, S2, S3, S4 en fonction du nombre de semestres, nombre que choisit le professeur responsable de la formation
+	nom_semestre VARCHAR2(10), -- nom automatique S1, S2, S3, S4 en fonction du nombre de semestres, nombre que choisit le professeur responsable de la formation sur l'interface java
 	nom_formation VARCHAR2(30),
 	annee_formation INTEGER,
-	date_debut DATE, -- en Jour/Mois , l'année est calculée automatiquement en fonction de l'année de la formation et le nom du semestre (ex S2 pour annne_formation=2014 commence et finit en 2015)
-	date_fin DATE,
+	date_debut DATE, -- le professeur responsable de la formation choisit la date en type JJ/MM/AAAA et une vérification est faite que les semestres sont bien dans l'odre chronologique (que le S2 ne commence pas avant le S1 par exemple)
+	date_fin DATE, -- le professeur responsable de la formation choisit la date en type JJ/MM/AAAA et une vérification est faite que les semestres sont bien dans l'odre chronologique (que le S2 ne commence pas avant le S1 par exemple)
+	semestre_ouvert INTEGER DEFAULT 0, -- semestre fermé par défault
+	semestre_termine INTEGER DEFAULT 0, -- le semestre n'est pas terminé
 	CONSTRAINT PK_SEMESTRE PRIMARY KEY (id_semestre),
 	CONSTRAINT UNIQUE_SEMESTRE UNIQUE (nom_semestre, nom_formation, annee_formation), -- pas de redondance de données (pas deux S1 pour la même formation)
 	CONSTRAINT FK_SEMESTRE_FORMATION FOREIGN KEY (nom_formation, annee_formation) REFERENCES FORMATION(nom_formation, annee_formation)
@@ -130,6 +132,7 @@ CREATE TABLE NOTES (
 	valeur_note REAL,
 	coef_note REAL,
 	absent INTEGER DEFAULT 0, -- pas de BOOLEAN en SQL (mais il y en a en PL/SQL)
+	absence_justifiee INTEGER DEFAULT 0,
 	type_note VARCHAR2(2),
 	CONSTRAINT PK_NOTES PRIMARY KEY (id_note),
 	CONSTRAINT FK_NOTES_GP_SUIT_ENSEIGNEMENT FOREIGN KEY (id_groupe, id_enseignement) REFERENCES GROUPE_SUIT_ENSEIGNEMENT(id_groupe, id_enseignement),
