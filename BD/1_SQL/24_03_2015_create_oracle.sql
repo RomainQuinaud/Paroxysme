@@ -150,6 +150,7 @@ CREATE TABLE STATS_ENSEIGNEMENT_ETUDIANT (
 	id_groupe INTEGER,
 	id_enseignement INTEGER,
 	moy_etu_enseignement_CC REAL,
+	coef_total_CC REAL,
 	moy_etu_enseignement_DS REAL,
 	moy_etu_enseignement_total REAL,
 	CONSTRAINT PK_STATS_ENSEIGNEMENT_ETUDIANT PRIMARY KEY (id_user, id_groupe, id_enseignement),
