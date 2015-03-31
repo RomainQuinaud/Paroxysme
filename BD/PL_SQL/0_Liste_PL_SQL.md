@@ -33,7 +33,7 @@
 
 
 
-====================================	MODIFICATIONS POSSIBLES 	====================================
+==============================	MODIFICATIONS POSSIBLES	====================================
 
 
 
@@ -71,7 +71,7 @@
 
 
 
-================================	 TRIGGERS 		==============================================
+===============================	 TRIGGERS	==============================================
 
 
 Trigger after each row sur la table NOTES
@@ -109,7 +109,7 @@ Trigger sur la table STATS_ENSEIGNEMENT_ETUDIANT qui calculera la moyenne de l'�
 
 
 
-=================================	 PACKAGES 		==============================================
+================================  PACKAGES  ==============================================
 
 Package Stats
 	- contient fonctions et procédures utilisées pour le calcul des différentes moyennes et appelées dans les différents triggers
@@ -123,7 +123,7 @@ Package Stats
 
 
 
-==================================	 PROCEDURES 		===============================================
+================================== PROCEDURES  ===============================================
 
 
 
@@ -139,7 +139,7 @@ Package Stats
 
 
 
-==================================	 FONCTIONS	================================================
+==================================  FONCTIONS  ================================================
 
 
 Fonction isResponsable(idUser, xxx) return boolean
