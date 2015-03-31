@@ -1,8 +1,8 @@
-Triggers, PAckages, Fonctions et Procédures à implémenter
+#Triggers, Packages, Fonctions et Procédures à implémenter
 
 
 
-========================================== 		A FAIRE    		====================================
+=================================	A FAIRE    		====================================
 
 
 - trouver comment gérer une CONSTRAINT CHECK en java lorsqu'elle se déclenche
@@ -33,7 +33,7 @@ Triggers, PAckages, Fonctions et Procédures à implémenter
 
 
 
-========================================== 		MODIFICATIONS POSSIBLES 	====================================
+====================================	MODIFICATIONS POSSIBLES 	====================================
 
 
 
@@ -71,7 +71,7 @@ Triggers, PAckages, Fonctions et Procédures à implémenter
 
 
 
-===========================================		 TRIGGERS 		================================================
+================================	 TRIGGERS 		==============================================
 
 
 Trigger after each row sur la table NOTES
@@ -109,7 +109,7 @@ Trigger sur la table STATS_ENSEIGNEMENT_ETUDIANT qui calculera la moyenne de l'�
 
 
 
-===========================================		 PACKAGES 		================================================
+=================================	 PACKAGES 		==============================================
 
 Package Stats
 	- contient fonctions et procédures utilisées pour le calcul des différentes moyennes et appelées dans les différents triggers
@@ -123,7 +123,7 @@ Package Stats
 
 
 
-===========================================		 PROCEDURES 		================================================
+==================================	 PROCEDURES 		===============================================
 
 
 
@@ -139,7 +139,7 @@ Package Stats
 
 
 
-===========================================		 FONCTIONS 		================================================
+==================================	 FONCTIONS	================================================
 
 
 Fonction isResponsable(idUser, xxx) return boolean
