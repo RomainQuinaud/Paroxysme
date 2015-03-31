@@ -37,15 +37,13 @@
 
 
 - GERER le début et la fin des semestres
-		- calculées cachées qui seraient "date_debut_reelle" et "date_fin_reelle"
-				- trigger (after update or insert on each row) qui calcule une date de type JJ/MM/YYYY grâce à l'année de formation et le nom du semestre
+		- Le professeur réseponsable de la formation entre la date des semestre DD-MM-YYYY et une vérification est faite pour que les semestres soient bien dans l'ordre chronologique.
 		- booléens "semestre_ouvert" (default = false) et "semestre_termine" (default = false)
 				- si semestre_ouvert est à false, inserer des notes pour un enseignement correspondant à ce semestre est impossible
 				- si seul le booléen semestre_termine est à true, insérer des notes est impossible, sauf pour le professeur responsable de la formation (erreurs de saisies à rectifier, ...)
 				- si semestre_termine=false AND semestre_ouver=true alors l'insertion dans NOTES est possible
 		- ces booléens doivent être calculés
-				- heure fixe tous les jours ?
-				- action du professeur responsable d'une formation qui envoi une requête mise à jour des semestres ?
+				- heure fixe tous les jours
 
 
 
