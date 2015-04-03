@@ -126,6 +126,40 @@
 
 
 
+***
+
+
+
+
+
+
+##### Sur la table SEMESTRE pour les booléens semestre_ouvert et semestre_termine
+######Se déclenche tous les jours à OOhO1
+- lance une procédure pour ouvrir les semestres qui ont besoin d'être ouverts
+- lance une procédure pour fermer les semestres qui ont besoint d'être fermés
+
+###### Mise en place avec [DBMS_SCHELUDER](http://docs.oracle.com/cd/B19306_01/appdev.102/b14258/d_sched.htm)
+- Ce ne sera pas vraiment un trigger mais plutôt un évènement qui sera enregistré et qui lancera des procédures
+- Disons par exemple que ces procédures sont dans le package Fonctions_Utiles
+- Voilà la procédure à suivre (code pas forcément correct pour l'instant)
+```SQL
+begin
+  dbms_scheduler.create_job (
+    job_name = 'DEL_EXP_RESERVATIONS',  -- Choose some name. 
+    job_type = 'PLSQL_BLOCK',
+    job_action = 'begin Fonctions_Utiles.open_semester; Fonctions_Utiles.close_semester; end;',
+    start_date = SYSDATE,
+    repeat_interval = 'FREQ=DAILY',
+    enabled = TRUE,
+    comments = 'Daily update of semesters'
+    );
+end;
+/
+```
+
+
+
+
 
 
 
@@ -169,11 +203,21 @@
 			- Possibilité de ne proposer cette option que pour le prof responsable
 		- Pour chaque id_note qui match le libellé, le groupe et l'enseignement, supprimer la note
 
+***
 
 
+##### Procédure open_semester qui ouvre les semestres qui ont besoin d'être ouverts
+- Sélectionner tous les semestres qui ont semestre_ouvert à false
+	+ Si date_debut ≤ SYSDATE alors le mettre à vrai
+	+ Sinon ne rien faire
+
+***
 
 
-
+##### Procédure close_semester qui ferme les semestres qui ont besoin d'être fermés
+- Sélectionner tous les semestres qui ont semestre_termine à false
+	+ Si date_fin ≤ SYSDATE alors le mettre à vrai
+	+ Sinon ne rien faire
 
 
 
