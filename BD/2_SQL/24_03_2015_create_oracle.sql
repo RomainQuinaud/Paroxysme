@@ -83,9 +83,6 @@ CREATE TABLE GROUPE (
 CREATE TABLE GROUPE_SUIT_ENSEIGNEMENT (
 	id_groupe INTEGER,
 	id_enseignement INTEGER,
-	moy_groupe_enseignement_CC REAL, -- un enseignement correspond à un semestre, donc il y aura la par exemple la moyenne de CC d'algo pour le S1, S2, ...
-	moy_groupe_enseignement_DS REAL,
-	moy_groupe_enseignement_total REAL,
 	CONSTRAINT PK_GROUPE_SUIT_ENSEIGNEMENT PRIMARY KEY (id_groupe, id_enseignement),
 	CONSTRAINT FK_GP_ENSEIGN_TO_GROUPE FOREIGN KEY (id_groupe) REFERENCES GROUPE(id_groupe),
 	CONSTRAINT FK_GP_ENSEIGN_TO_ENSEIGN FOREIGN KEY (id_enseignement) REFERENCES ENSEIGNEMENT(id_enseignement)
@@ -139,6 +136,7 @@ CREATE TABLE NOTES (
 	CONSTRAINT FK_NOTES_ETUDIANT FOREIGN KEY (id_user) REFERENCES ETUDIANT(id_user),
 	CONSTRAINT FK_NOTES_TYPE_NOTE FOREIGN KEY (type_note) REFERENCES TYPE_NOTE(type_note),
 	CONSTRAINT UNIQUE_NOTES UNIQUE (id_user, id_enseignement, libelle_interrogation), -- pas deux notes pour une même interro
+	CONSTRAINT UNIQUE_LIBELLE_INTERROGATION UNIQUE (id_groupe, libelle_interrogation, id_enseignement), -- pas deux "Interro n°1" dans un même enseignement pour un même groupe
 	CONSTRAINT CHECK_NOTES CHECK (valeur_note BETWEEN 0 AND 20)
 	-- plein de choses à faire ici
 		-- pour un couple libelle_interrogation et id_enseignement, trouver le groupe auquel ca correspond (de par l'id_user de la note) et vérifier que pour ce couple libelle_interrogation et id_enseignement on a bien autant de lignes que d'élèves dans le groupe
