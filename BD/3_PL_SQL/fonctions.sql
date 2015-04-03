@@ -1,7 +1,4 @@
-
-#Fichier de fonction
-
-	create or replace function isResponsable(idU utilisateur.id_user%type,id_ens enseignement.id_enseignement%type) return boolean AS
+create or replace function isResponsable(idU utilisateur.id_user%type,id_ens enseignement.id_enseignement%type) return boolean AS
 	 resp boolean;
 	 id_prof formation.id_prof_responsable%type;
 	BEGIN
