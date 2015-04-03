@@ -70,7 +70,7 @@
 	- pas de calcul si on update autre chose que la note ou le coefficient de la note
 	- si c'est une note de type CC
 		- mise à jour de la moyenne (elle est forcément initialisée vu qu'on fait un update)
-		- moyenne = ( moyenne - (:OLD.note*:OLD.coef_note) + (:NEW.note*:NEW.coef_note) ) / (coef_total - :OLD.coef_note + :NEW.coef_note) (pas sur de la formule)
+		- moyenne = ( moyenne - (:OLD.note\*:OLD.coef_note) + (:NEW.note\*:NEW.coef_note) ) / (coef_total - :OLD.coef_note + :NEW.coef_note) (pas sur de la formule)
 	- si c'est une note de type DS
 		- copié collé de cette note dans l'attribut correspondant dans la table STATS_ENSEIGNEMENT_ETUDIANT (on écrase l'ancienne note)
 
@@ -81,7 +81,7 @@
 			- si "coeff_total" = ":OLD.coef_note"
 				- cela veut dire que la moyenne n'est calculée qu'à partir d'une seule note donc il va juste falloir la mettre à NULL (pas de division par zéro)
 			- sinon, calcul de la nouvelle moyenne
-				- moyenne = ( moyenne - :OLD.note * :OLD.coef_note ) / ( coef_total - :OLD.coef_note )
+				- moyenne = ( moyenne - :OLD.note \*  :OLD.coef_note ) / ( coef_total - :OLD.coef_note )
 	- si c'est une note de type DS
 		- illogique de supprimer un DS donc gérer ca en java ou en trigger, mais empêcher la suppression d'une note de DS (seulement modifiable)
 
@@ -92,10 +92,10 @@
 - After UPDATE of moyenne_enseignement_CC (on each row ?)
 	- si moyenne_enseignement_DS est NULL => ne rien faire
 	- si moyenne_enseignement_DS n'est pas NULL
-		- relancer le calcul de la moyenne_enseignement_total avec la nouvelle valeur de la moyenne_enseignement_CC (moyenne_enseignement_total = moyenne_enseignement_CC*0,4 + moyenne_enseignement_DS*0,6)
+		- relancer le calcul de la moyenne_enseignement_total avec la nouvelle valeur de la moyenne_enseignement_CC (moyenne_enseignement_total = moyenne_enseignement_CC\*0,4 + moyenne_enseignement_DS\*0,6)
 
 - After INSERT or UPDATE of moyenne_enseignement_DS (on each row ?)
-	- lancer le calcul de la moyenne_enseignement_total avec la nouvelle valeur de la moyenne_enseignement_DS (moyenne_enseignement_total = moyenne_enseignement_CC*0,4 + moyenne_enseignement_DS*0,6)
+	- lancer le calcul de la moyenne_enseignement_total avec la nouvelle valeur de la moyenne_enseignement_DS (moyenne_enseignement_total = moyenne_enseignement_CC\*0,4 + moyenne_enseignement_DS\*0,6)
 
 - After INSERT or UPDATE of moyenne_enseignement_total (on each row ?)
 	- lancer l'initialisation ou la mise à jour des moyennes de l'étudiant au semestre (un enseignement correspond à un seul semestre)
@@ -105,15 +105,15 @@
 	- s'il n'y a pas de ligne correspondant à cet étudiant et au semestre correspondant à l'enseignement alors il faut INSERT
 		- appel d'une fonction qui renvoie la moyenne de CC du semestre pour cet étudiant
 			- trouver tous les enseignements pour cet id_user et cet id_groupe dans la table STATS_ENSEIGNEMENT_ETUDIANT
-			- pour chaque enseignement de son groupe, moyenne_semestre_CC = (somme des moyenne_enseignement_CC * coef_enseignement) / (somme des coef_enseignement)
+			- pour chaque enseignement de son groupe, moyenne_semestre_CC = (somme des moyenne_enseignement_CC \* coef_enseignement) / (somme des coef_enseignement)
 				- penser à tester des valeurs à NULL (ca peut arriver, auquel cas on n'en tient pas compte dans le calcul)
 		- appel d'une fonction qui renvoie la moyenne de DS du semestre pour cet étudiant
 			- trouver tous les enseignements pour cet id_user et cet id_groupe dans la table STATS_ENSEIGNEMENT_ETUDIANT
-			- pour chaque enseignement de son groupe, moyenne_semestre_DS = (somme des moyenne_enseignement_DS * coef_enseignement) / (somme des coef_enseignement)
+			- pour chaque enseignement de son groupe, moyenne_semestre_DS = (somme des moyenne_enseignement_DS \* coef_enseignement) / (somme des coef_enseignement)
 				- penser à tester des valeurs à NULL (ca peut arriver, auquel cas on n'en tient pas compte dans le calcul)
 		- appel d'une fonction qui renvoie la moyenne totale du semestre pour cet étudiant
 			- trouver tous les enseignements pour cet id_user et cet id_groupe dans la table STATS_ENSEIGNEMENT_ETUDIANT
-			- pour chaque enseignement de son groupe, moyenne_semestre_total = (somme des moyenne_enseignement_total * coef_enseignement) / (somme des coef_enseignement)
+			- pour chaque enseignement de son groupe, moyenne_semestre_total = (somme des moyenne_enseignement_total \* coef_enseignement) / (somme des coef_enseignement)
 				- penser à tester des valeurs à NULL (ca peut arriver, auquel cas on n'en tient pas compte dans le calcul)
 		- possibilité de tout faire en une seule procédure qui renvoie ces informations par le biais de ses paramètres (en référence)
 	- si une ligne existe pour cet étudiant et le semestre correspondant à l'enseignement, alors il faut update
