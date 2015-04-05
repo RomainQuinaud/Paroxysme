@@ -4,9 +4,9 @@
 
 ## LAURENCE
 
-
-
-
+Procédure close_semester qui ferme les semestres qui ont besoin d'être fermés
+Procédure open_semester qui ouvre les semestres qui ont besoin d'être ouverts
+Procédure Supression d'une interrogation de contrôle continu de la part d'un professeur
 
 
 
