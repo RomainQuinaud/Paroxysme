@@ -140,7 +140,6 @@ CREATE TABLE NOTES (
 	CONSTRAINT FK_NOTES_ETUDIANT FOREIGN KEY (id_user) REFERENCES ETUDIANT(id_user),
 	CONSTRAINT FK_NOTES_TYPE_NOTE FOREIGN KEY (type_note) REFERENCES TYPE_NOTE(type_note),
 	CONSTRAINT UNIQUE_NOTES UNIQUE (id_user, id_enseignement, libelle_interrogation), -- pas deux notes pour une même interro
-	CONSTRAINT UNIQUE_LIBELLE_INTERROGATION UNIQUE (id_groupe, libelle_interrogation, id_enseignement), -- pas deux "Interro n°1" dans un même enseignement pour un même groupe
 	CONSTRAINT CHECK_NOTES CHECK (valeur_note BETWEEN 0 AND 20)
 	-- plein de choses à faire ici
 		-- pour un couple libelle_interrogation et id_enseignement, trouver le groupe auquel ca correspond (de par l'id_user de la note) et vérifier que pour ce couple libelle_interrogation et id_enseignement on a bien autant de lignes que d'élèves dans le groupe
