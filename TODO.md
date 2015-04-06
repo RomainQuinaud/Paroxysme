@@ -198,7 +198,7 @@ end;
 	- Professeur gère ses enseignement => il en sélectionne un (on a l'id_enseignement)
 	- Il sélectionne un des groupes qui suit cet enseignement (on a l'id_groupe)
 	- Il a alors la liste des interrogations
-		- Grâce à `CONSTRAINT UNIQUE_LIBELLE_INTERROGATION UNIQUE (id_groupe, libelle_interrogation, id_enseignement)`, on sait qu'il n'y aura pas deux même libelle_interrogation pour un groupe et un enseignement donné
+		- Grâce à `CONSTRAINT UNIQUE_LIBELLE_INTERROGATION UNIQUE (id_groupe, libelle_interrogation, id_enseignement, id_user)`, on sait qu'il n'y aura pas deux même libelle_interrogation pour un groupe et un enseignement donné
 		- Il clique sur supprimer l'interrogation (on ne sait jamais, des fois qu'elle soit trop mauvaise ^^)
 			- Possibilité de ne proposer cette option que pour le prof responsable
 		- Pour chaque id_note qui match le libellé, le groupe et l'enseignement, supprimer la note
