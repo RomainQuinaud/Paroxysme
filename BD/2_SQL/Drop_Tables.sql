@@ -21,3 +21,14 @@ drop sequence gr;
 drop sequence etu;
 drop sequence ens;
 drop sequence note;
+
+
+
+-- Astuce vraiment pratique pour connaître l'ordre des drop tables sans regarder le schéma :
+
+-- select 'drop table '||table_name||' cascade constraints;' from user_tables;
+-- Cela donne la liste des tables dans l'ordre des deletes, il y a plus qu'à copier coller
+
+-- Même systeme pour les sequences : 
+-- select 'drop sequence '||sequence_name||' ;' from user_sequences;
+
