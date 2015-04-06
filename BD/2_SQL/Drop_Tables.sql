@@ -12,3 +12,12 @@ drop table SEMESTRE;
 drop table FORMATION;
 drop table PROFESSEUR;
 drop table UTILISATEUR;
+
+
+drop sequence sem;
+drop sequence num;
+drop sequence id;
+drop sequence gr;
+drop sequence etu;
+drop sequence ens;
+drop sequence note;
