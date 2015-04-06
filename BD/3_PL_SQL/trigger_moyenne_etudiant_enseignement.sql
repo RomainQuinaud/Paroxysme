@@ -1,29 +1,4 @@
 --@Jeanne
--- Procédure qui renvoie vrai s'il existe une ligne dans la table stats_enseignement_etudiant pour un étudiant, un enseignement et un groupe donné.
-CREATE OR REPLACE FUNCTION is_stat_etu (id_etu IN etudiant.id_user%type, id_ens IN enseignement.id_enseignement%type, id_gr IN groupe.id_groupe%type) RETURN boolean IS
-	bool_exists NUMBER(1);
-BEGIN
-	SELECT CASE
-		WHEN EXISTS (
-			SELECT id_user
-			FROM stats_enseignement_etudiant
-			WHERE id_user = id_etu
-			AND id_enseignement = id_ens
-			AND id_groupe = id_gr
-			)
-			THEN 1
-			ELSE 0
-		END INTO bool_exists
-	FROM dual;
-	IF (bool_exists = 1) 
-	THEN RETURN true;
-	ELSE RETURN false;
-	END IF;
-END;
-/
-
-
---@Jeanne
 -- Trigger qui met à jour les statistiques sur les moyennes de l'étudiant après insertion d'une note
 CREATE OR REPLACE TRIGGER moyenne_etudiant_enseignement
 	AFTER INSERT ON notes
