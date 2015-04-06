@@ -1,5 +1,7 @@
+-- @Romain
+-- Que fait la fonction ?
 create or replace function isResponsable(idU utilisateur.id_user%type,id_ens enseignement.id_enseignement%type) return boolean AS
-	 resp boolean;
+	 resp boolean; -- pas d'initialisation ?
 	 id_prof formation.id_prof_responsable%type;
 	BEGIN
 	  select id_prof_responsable into id_prof
@@ -10,5 +12,7 @@ create or replace function isResponsable(idU utilisateur.id_user%type,id_ens ens
 			resp:=true;
 		end if;
 
-	  return resp;
+	  return resp; -- booléen initialisé directement à false ? Parce que si on ne passe pas dans le if, il n'est initialisé ni dans le bloc BEGIN ni dans le DECLARE
 	END;
+
+-- Manque test unitaires :)
