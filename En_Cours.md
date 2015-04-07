@@ -14,8 +14,7 @@ Procédure Supression d'une interrogation de contrôle continu de la part d'un p
 
 
 ## JEANNE
-Trigger on stats_enseignement_etudiant
-After INSERT or UPDATE of moyenne_enseignement_total
+Tests et corrections sur mes triggers
 
 
 
