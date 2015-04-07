@@ -48,7 +48,7 @@ Par exemple si je créée un boutton, je lui attribue un id : "fx:id="login_butt
 
 
 
-
+Résolution du problème côté configuration du serveur
 
 
 
