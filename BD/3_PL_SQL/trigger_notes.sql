@@ -55,6 +55,60 @@ END;
 
 
 
+--After UPDATE of valeur_note, coef_note for each row (dans le cas d'une modification d'une note)
+
+--pas de calcul si on update autre chose que la note ou le coefficient de la note
+--si c'est une note de type CC
+--mise à jour de la moyenne (elle est forcément initialisée vu qu'on fait un update)
+--moyenne = ( moyenne - (:OLD.note*:OLD.coef_note) + (:NEW.note*:NEW.coef_note) ) / (coef_total - :OLD.coef_note + :NEW.coef_note) (pas sur de la formule)
+--si c'est une note de type DS
+--copié collé de cette note dans l'attribut correspondant dans la table STATS_ENSEIGNEMENT_ETUDIANT (on écrase l'ancienne note)
+
+
+--@Laurence
+CREATE OR REPLACE TRIGGER calcul_moy_etu_ens_when_update BEFORE UPDATE OF valeur_note, coef_note ON NOTES FOR EACH ROW
+
+DECLARE
+	moyenne_temp FLOAT;
+	coeftotal FLOAT;
+
+BEGIN
+
+	SELECT coef_total_CC, moy_etu_enseignement_CC INTO coeftotal, moyenne_temp
+	FROM  STATS_ENSEIGNEMENT_ETUDIANT
+	WHERE id_user = :OLD.id_user AND id_groupe = :OLD.id_groupe AND id_enseignement = :OLD.id_enseignement;
+
+	IF(:NEW.type_note = 'CC') THEN
+		moyenne_temp :=(moyenne_temp * coeftotal - (:OLD.valeur_note*:OLD.coef_note) + (:NEW.valeur_note*:NEW.coef_note))/ (coeftotal - :OLD.coef_note + :NEW.coef_note);
+		coeftotal := coeftotal - :OLD.coef_note + :NEW.coef_note;
+		UPDATE STATS_ENSEIGNEMENT_ETUDIANT 
+		SET moy_etu_enseignement_CC = moyenne_temp, coef_total_CC = coeftotal
+		WHERE id_user = :OLD.id_user AND id_groupe = :OLD.id_groupe AND id_enseignement = :OLD.id_enseignement;
+	ELSE
+		UPDATE STATS_ENSEIGNEMENT_ETUDIANT
+		SET moy_etu_enseignement_DS = :NEW.valeur_note
+		WHERE id_user = :OLD.id_user AND id_groupe = :OLD.id_groupe AND id_enseignement = :OLD.id_enseignement;
+	END IF;
+
+END;
+
+-- Tests Unitaires
+-- test sur les notes de id_user = 12 and id_groupe=1 and id_enseignement=1
+-- test pour update d'une note de CC
+-- on remplace une note de 12 par 15 (nouvelle moyenne = 15 car deux notes à 15)
+-- update NOTES
+-- set valeur_note = 15
+-- where id_note=1;
+
+-- -- on remplace une note de 15 par 10 coef 2 (nouvelle moyenne = 11,66 car 15 coef 1 et 10 coef 2)
+-- update NOTES
+-- set valeur_note = 10, coef_note=2
+-- where id_note=1;
+
+-- -- test pour update d'une note DS
+-- update NOTES
+-- set valeur_note = 15
+-- where id_note = 27;
 
 
 
