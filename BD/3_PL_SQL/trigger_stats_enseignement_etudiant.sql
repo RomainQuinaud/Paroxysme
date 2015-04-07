@@ -37,3 +37,30 @@ BEGIN
 	AND id_enseignement = :NEW.id_enseignement
 	AND id_groupe = :NEW.id_groupe;
 END;
+/
+
+--@Jeanne
+-- Trigger qui met à jour la moyenne du semestre de l'étudiant lorsqu'une de ses moyennes générales d'enseignements est ajoutée ou modifiée
+CREATE OR REPLACE TRIGGER moy_sem_when_update_moy_ens
+	AFTER UPDATE OF moy_etu_enseignement_total ON stats_enseignement_etudiant
+	FOR EACH ROW
+DECLARE
+	moyenneSemestreCC float;
+	moyenneSemestreDS float;
+	moyenneSemestreTotal float;
+	id_sem INTEGER := FONCTIONS_UTILES.getIDSemestre(:NEW.id_enseignement);
+BEGIN
+	statistiques.calcul_moyenne_semestre(:NEW.id_user, :NEW.id_groupe, :NEW.id_enseignement, moyenneSemestreCC, moyenneSemestreDS, moyenneSemestreTotal);
+	-- Si l'étudiant a déjà bénéficié d'un calcul de moyenne de semestre pour le semestre concerné par l'update -> mise à jour
+	IF(fonctions_utiles.is_stat_sem_etu(:NEW.id_user, id_sem, :NEW.id_groupe))
+	THEN
+		UPDATE stats_semestre_etudiant
+		SET moy_etu_semestre_CC = moyenneSemetreCC, moy_etu_semestre_DS = moyenneSemestreDS, moy_etu_semestre_total = moyenneSemestreTotal
+		WHERE id_user = :NEW.id_user
+		AND id_groupe = :NEW.id_groupe
+		AND id_semestre = id_sem;	
+	ELSE -- sinon -> insertion
+		INSERT INTO stats_semestre_etudiant
+		VALUES (:NEW.id_user, :NEW.id_groupe, id_sem, moyenneSemestreCC, moyenneSemestreDS, moyenneSemestreTotal);	
+	END IF;
+END;

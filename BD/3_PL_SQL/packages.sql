@@ -102,6 +102,7 @@ CREATE OR REPLACE PACKAGE BODY FONCTIONS_UTILES IS
 				-- ========================================================================== --
 				-- ========================================================================== --
 	
+	--@Jeanne
 	-- Fonction qui renvoie vrai s'il existe une ligne dans la table stats_semestre_etudiant pour un étudiant, un semestre et un groupe donné.
 	FUNCTION is_stat_sem_etu (id_etu IN etudiant.id_user%type, id_sem IN semestre.id_semestre%type, id_gr IN groupe.id_groupe%type) RETURN boolean IS
 	bool_exists NUMBER(1);
