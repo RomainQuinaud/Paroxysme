@@ -39,6 +39,7 @@
 	- "Tout le monde" peut insérer des notes
 - Si le semestre est fermé (terminé)
 	- Seul le professeur responsable de la formation peut insérer ou modifier les notes
+- Lors de l'ajout d'un utilisateur, calcul du login et du mail en JAVA et préparation de la requête d'insert
 
 
 
