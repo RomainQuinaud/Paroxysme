@@ -3,6 +3,7 @@ CREATE OR REPLACE PACKAGE FONCTIONS_UTILES IS
 	FUNCTION getCoefEnseignement (id_ens enseignement.id_enseignement%type) RETURN FLOAT;
 	FUNCTION getIDSemestre (id_ens enseignement.id_enseignement%type) RETURN INTEGER;
 	FUNCTION is_stat_etu (id_etu IN etudiant.id_user%type, id_ens IN enseignement.id_enseignement%type, id_gr IN groupe.id_groupe%type) RETURN boolean;
+	FUNCTION getCoefTypeNote (unType TYPE_NOTE.type_note%TYPE) RETURN FLOAT;
 END FONCTIONS_UTILES;
 /
 
@@ -98,11 +99,20 @@ CREATE OR REPLACE PACKAGE BODY FONCTIONS_UTILES IS
 				-- ========================================================================== --
 
 
+	-- Fonction qui renvoi le coef général selon le type de note (DS ou CC)
+	FUNCTION getCoefTypeNote (unType TYPE_NOTE.type_note%TYPE) RETURN FLOAT IS
+		coefGeneral FLOAT;
+	BEGIN
+		SELECT coef_general INTO coefGeneral
+		FROM TYPE_NOTE
+		WHERE upper(type_note) = upper(unType);
 
+		RETURN coefGeneral;
+	END getCoefTypeNote;
 
 
 END FONCTIONS_UTILES;
-/
+/	
 
 
 
@@ -168,7 +178,7 @@ CREATE OR REPLACE PACKAGE BODY STATISTIQUES IS
 
 		moyenneSemestreCC := moyenneSemestreCC / coefTotalCC;
 		moyenneSemestreDS := moyenneSemestreDS / coefTotalDS;
-		moyenneSemestreTotal := (moyenneSemestreCC*0.4) + (moyenneSemestreDS*0.6);
+		moyenneSemestreTotal := (moyenneSemestreCC*FONCTIONS_UTILES.getCoefTypeNote('CC')) + (moyenneSemestreDS*FONCTIONS_UTILES.getCoefTypeNote('DS'));
 	END calcul_moyenne_semestre;
 	
 

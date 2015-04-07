@@ -36,12 +36,12 @@ BEGIN
 
 	moyenneSemestreCC := moyenneSemestreCC / coefTotalCC;
 	moyenneSemestreDS := moyenneSemestreDS / coefTotalDS;
-	moyenneSemestreTotal := (moyenneSemestreCC*0.4) + (moyenneSemestreDS*0.6);
+	moyenneSemestreTotal := (moyenneSemestreCC*getCoefTypeNote('CC')) + (moyenneSemestreDS*getCoefTypeNote('DS'));
 END calcul_moyenne_semestre;
 /
 
 
--- Test unitaire
+-- Test unitaire -- A MODIFIER !!
 
 -- INSERT INTO ENSEIGNEMENT VALUES(2, 1,'Mathématiques', 1, 2);
 -- INSERT INTO GROUPE_SUIT_ENSEIGNEMENT VALUES (1,2);

@@ -141,3 +141,40 @@ END is_stat_etu;
 
 
 
+
+--@Raphael
+-- Fonction qui renvoi le coef général selon le type de note (DS ou CC)
+-- Package FONCTIONS_UTILES
+CREATE OR REPLACE FUNCTION getCoefTypeNote (unType TYPE_NOTE.type_note%TYPE) RETURN FLOAT IS
+	coefGeneral FLOAT;
+BEGIN
+	SELECT coef_general INTO coefGeneral
+	FROM TYPE_NOTE
+	WHERE upper(type_note) = upper(unType);
+
+	RETURN coefGeneral;
+END getCoefTypeNote;
+/
+
+-- Test unitaire
+
+
+
+
+
+
+-- ===================================================================================================================== -- 
+-- ===================================================================================================================== -- 
+-- ===================================================================================================================== -- 
+
+
+
+
+
+
+
+
+
+
+
+
