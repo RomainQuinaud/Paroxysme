@@ -6,7 +6,7 @@ CREATE OR REPLACE PACKAGE FONCTIONS_UTILES IS
 	FUNCTION getCoefTypeNote (unType TYPE_NOTE.type_note%TYPE) RETURN FLOAT;
 	PROCEDURE supprInterro (id_enseign INTEGER, id_group INTEGER, libelle VARCHAR);
 	PROCEDURE open_semester;
-	PROCEDURE close_semester:
+	PROCEDURE close_semester;
 END FONCTIONS_UTILES;
 /
 
