@@ -3,8 +3,6 @@
 CREATE OR REPLACE TRIGGER moyenne_etudiant_enseignement
 	AFTER INSERT ON notes
 	FOR EACH ROW
-DECLARE
-	nbNotes number;
 BEGIN
 	IF(:NEW.type_note = 'CC')
 	THEN
