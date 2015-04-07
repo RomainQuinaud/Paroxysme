@@ -1,15 +1,16 @@
 --@Raphael
 -- Procédure qui renvoi par le biais des paramètre la moyenne d'un élève à un semestre (moyenne CC, DS et total)
 -- Package STATISTIQUES
-CREATE OR REPLACE PROCEDURE calcul_moyenne_semestre (idEleve UTILISATEUR.id_user%type, sonGroupe GROUPE.id_groupe%type, moyenneSemestreCC OUT FLOAT, moyenneSemestreDS OUT FLOAT, moyenneSemestreTotal OUT FLOAT) IS
+CREATE OR REPLACE PROCEDURE calcul_moyenne_semestre (idEleve UTILISATEUR.id_user%type, sonGroupe GROUPE.id_groupe%type, idEns ENSEIGNEMENT.id_enseignement%TYPE, moyenneSemestreCC OUT FLOAT, moyenneSemestreDS OUT FLOAT, moyenneSemestreTotal OUT FLOAT) IS
 	coefTotalCC FLOAT := 0;
 	coefTotalDS FLOAT := 0;
 	coefTempEnseignement FLOAT := 0;
+	idSemestre INTEGER := FONCTIONS_UTILES.getIDSemestre(idEns);
 
 	CURSOR sesStatsEnseignement IS
 		SELECT *
-		FROM STATS_ENSEIGNEMENT_ETUDIANT
-		WHERE id_user = idEleve AND id_groupe = sonGroupe;
+		FROM STATS_ENSEIGNEMENT_ETUDIANT natural join GROUPE_SUIT_ENSEIGNEMENT NATURAL JOIN ENSEIGNEMENT NATURAL JOIN SEMESTRE
+		WHERE id_user = idEleve AND id_groupe = sonGroupe AND id_semestre = idSemestre; -- on ne veut ses stats que pour un semestre donné
 
 	ligne_sesStatsEnseignement sesStatsEnseignement%ROWTYPE;
 
@@ -36,20 +37,12 @@ BEGIN
 
 	moyenneSemestreCC := moyenneSemestreCC / coefTotalCC;
 	moyenneSemestreDS := moyenneSemestreDS / coefTotalDS;
-	moyenneSemestreTotal := (moyenneSemestreCC*getCoefTypeNote('CC')) + (moyenneSemestreDS*getCoefTypeNote('DS'));
+	moyenneSemestreTotal := (moyenneSemestreCC*FONCTIONS_UTILES.getCoefTypeNote('CC')) + (moyenneSemestreDS*FONCTIONS_UTILES.getCoefTypeNote('DS'));
 END calcul_moyenne_semestre;
 /
 
 
--- Test unitaire -- A MODIFIER !!
-
--- INSERT INTO ENSEIGNEMENT VALUES(2, 1,'Mathématiques', 1, 2);
--- INSERT INTO GROUPE_SUIT_ENSEIGNEMENT VALUES (1,2);
-
--- INSERT INTO NOTES VALUES (300, 12, 1, 2, 'Interro1', SYSDATE, 14, 1, 0, 0, 'CC');
--- INSERT INTO NOTES VALUES (301, 12, 1, 2, 'Interro2', SYSDATE, 14, 1, 0, 0, 'CC');
--- INSERT INTO NOTES VALUES (302, 12, 1, 2, 'DS', SYSDATE, 10, 1, 0, 0, 'DS');
-
+-- Test unitaire -- 
 
 
 -- DECLARE
@@ -58,12 +51,10 @@ END calcul_moyenne_semestre;
 -- 	moyenneSemestreTotal FLOAT := 0;
 -- BEGIN
 -- 	calcul_moyenne_semestre (12, 1, moyenneSemestreCC, moyenneSemestreDS, moyenneSemestreTotal);
---  	DBMS_OUTPUT.PUT_LINE('moyenneSemestreCC (attentu = 13,7) : ' || moyenneSemestreCC);
---  	DBMS_OUTPUT.PUT_LINE('moyenneSemestreDS (attendu = 11,2) : ' || moyenneSemestreDS);
---  	DBMS_OUTPUT.PUT_LINE('moyenneSemestreTotal (attendu = 12,2) : ' || moyenneSemestreTotal);
+--  	DBMS_OUTPUT.PUT_LINE('moyenneSemestreCC (attentu = ?) : ' || moyenneSemestreCC);
+--  	DBMS_OUTPUT.PUT_LINE('moyenneSemestreDS (attendu = ?) : ' || moyenneSemestreDS);
+--  	DBMS_OUTPUT.PUT_LINE('moyenneSemestreTotal (attendu = ?) : ' || moyenneSemestreTotal);
 --  END;
---  /
-
 
 
 

@@ -111,6 +111,15 @@ CREATE OR REPLACE PACKAGE BODY FONCTIONS_UTILES IS
 	END getCoefTypeNote;
 
 
+
+				-- ========================================================================== --
+				-- ========================================================================== --
+				-- ========================================================================== --
+
+
+
+
+
 END FONCTIONS_UTILES;
 /	
 
@@ -135,7 +144,7 @@ END FONCTIONS_UTILES;
 
 
 CREATE OR REPLACE PACKAGE STATISTIQUES IS
-	PROCEDURE calcul_moyenne_semestre (idEleve UTILISATEUR.id_user%type, sonGroupe GROUPE.id_groupe%type, moyenneSemestreCC OUT FLOAT, moyenneSemestreDS OUT FLOAT, moyenneSemestreTotal OUT FLOAT);
+	PROCEDURE calcul_moyenne_semestre (idEleve UTILISATEUR.id_user%type, sonGroupe GROUPE.id_groupe%type, idEns ENSEIGNEMENT.id_enseignement%TYPE, moyenneSemestreCC OUT FLOAT, moyenneSemestreDS OUT FLOAT, moyenneSemestreTotal OUT FLOAT);
 END STATISTIQUES;
 /
 
@@ -143,15 +152,16 @@ END STATISTIQUES;
 CREATE OR REPLACE PACKAGE BODY STATISTIQUES IS
 
 	-- Procédure qui renvoi par le biais des paramètre la moyenne d'un élève à un semestre (id_user et id_groupe passés en paramètre) (moyenne CC, DS et total)
-	PROCEDURE calcul_moyenne_semestre (idEleve UTILISATEUR.id_user%type, sonGroupe GROUPE.id_groupe%type, moyenneSemestreCC OUT FLOAT, moyenneSemestreDS OUT FLOAT, moyenneSemestreTotal OUT FLOAT) IS
+	PROCEDURE calcul_moyenne_semestre (idEleve UTILISATEUR.id_user%type, sonGroupe GROUPE.id_groupe%type, idEns ENSEIGNEMENT.id_enseignement%TYPE, moyenneSemestreCC OUT FLOAT, moyenneSemestreDS OUT FLOAT, moyenneSemestreTotal OUT FLOAT) IS
 		coefTotalCC FLOAT := 0;
 		coefTotalDS FLOAT := 0;
 		coefTempEnseignement FLOAT := 0;
+		idSemestre INTEGER := FONCTIONS_UTILES.getIDSemestre(idEns);
 
 		CURSOR sesStatsEnseignement IS
 			SELECT *
-			FROM STATS_ENSEIGNEMENT_ETUDIANT
-			WHERE id_user = idEleve AND id_groupe = sonGroupe;
+			FROM STATS_ENSEIGNEMENT_ETUDIANT natural join GROUPE_SUIT_ENSEIGNEMENT NATURAL JOIN ENSEIGNEMENT NATURAL JOIN SEMESTRE
+			WHERE id_user = idEleve AND id_groupe = sonGroupe AND id_semestre = idSemestre; -- on ne veut ses stats que pour un semestre donné
 
 		ligne_sesStatsEnseignement sesStatsEnseignement%ROWTYPE;
 
@@ -180,6 +190,7 @@ CREATE OR REPLACE PACKAGE BODY STATISTIQUES IS
 		moyenneSemestreDS := moyenneSemestreDS / coefTotalDS;
 		moyenneSemestreTotal := (moyenneSemestreCC*FONCTIONS_UTILES.getCoefTypeNote('CC')) + (moyenneSemestreDS*FONCTIONS_UTILES.getCoefTypeNote('DS'));
 	END calcul_moyenne_semestre;
+
 	
 
 				-- ========================================================================== --
