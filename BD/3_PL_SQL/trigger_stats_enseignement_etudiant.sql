@@ -55,7 +55,7 @@ BEGIN
 	IF(fonctions_utiles.is_stat_sem_etu(:NEW.id_user, id_sem, :NEW.id_groupe))
 	THEN
 		UPDATE stats_semestre_etudiant
-		SET moy_etu_semestre_CC = moyenneSemetreCC, moy_etu_semestre_DS = moyenneSemestreDS, moy_etu_semestre_total = moyenneSemestreTotal
+		SET moy_etu_semestre_CC = moyenneSemestreCC, moy_etu_semestre_DS = moyenneSemestreDS, moy_etu_semestre_total = moyenneSemestreTotal
 		WHERE id_user = :NEW.id_user
 		AND id_groupe = :NEW.id_groupe
 		AND id_semestre = id_sem;	
