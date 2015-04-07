@@ -68,7 +68,7 @@ END calcul_moyenne_semestre;
 
 
 
-##### Supression d'une interrogation de contrôle continu de la part d'un professeur
+--##### Supression d'une interrogation de contrôle continu de la part d'un professeur
 --Scénario : 
 --	- Professeur gère ses enseignement => il en sélectionne un (on a l'id_enseignement)
 --	- Il sélectionne un des groupes qui suit cet enseignement (on a l'id_groupe)
@@ -84,11 +84,10 @@ CREATE OR REPLACE PROCEDURE supprInterro (id_enseign INTEGER, id_group INTEGER, 
 	suppr INTEGER;
 
 	CURSOR curseurInterro IS
-
-	SELECT id_enseignement, id_group, libelle_interrogation, id_note
-	FROM NOTES n
-	WHERE n.id_enseignement = id_enseign AND n.id_groupe = id_group AND n.libelle_interrogation = libelle
-	FOR UPDATE;
+		SELECT id_enseignement, id_group, libelle_interrogation, id_note
+		FROM NOTES n
+		WHERE n.id_enseignement = id_enseign AND n.id_groupe = id_group AND n.libelle_interrogation = libelle
+		FOR UPDATE;
 
 	ligne curseurInterro%ROWTYPE;
 
@@ -169,7 +168,7 @@ END open_semester;
 -- ===================================================================================================================== -- 
 
 
-##### Procédure close_semester qui ferme les semestres qui ont besoin d'être fermés
+--##### Procédure close_semester qui ferme les semestres qui ont besoin d'être fermés
 --- Sélectionner tous les semestres qui ont semestre_termine à false
 --	+ Si date_fin ≤ SYSDATE alors le mettre à vrai
 --	+ Sinon ne rien faire

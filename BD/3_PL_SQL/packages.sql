@@ -4,6 +4,9 @@ CREATE OR REPLACE PACKAGE FONCTIONS_UTILES IS
 	FUNCTION getIDSemestre (id_ens enseignement.id_enseignement%type) RETURN INTEGER;
 	FUNCTION is_stat_etu (id_etu IN etudiant.id_user%type, id_ens IN enseignement.id_enseignement%type, id_gr IN groupe.id_groupe%type) RETURN boolean;
 	FUNCTION getCoefTypeNote (unType TYPE_NOTE.type_note%TYPE) RETURN FLOAT;
+	PROCEDURE supprInterro (id_enseign INTEGER, id_group INTEGER, libelle VARCHAR);
+	PROCEDURE open_semester;
+	PROCEDURE close_semester:
 END FONCTIONS_UTILES;
 /
 
@@ -115,6 +118,124 @@ CREATE OR REPLACE PACKAGE BODY FONCTIONS_UTILES IS
 				-- ========================================================================== --
 				-- ========================================================================== --
 				-- ========================================================================== --
+
+
+
+	--##### Supression d'une interrogation de contrôle continu de la part d'un professeur
+	--Scénario : 
+	--	- Professeur gère ses enseignement => il en sélectionne un (on a l'id_enseignement)
+	--	- Il sélectionne un des groupes qui suit cet enseignement (on a l'id_groupe)
+	--	- Il a alors la liste des interrogations
+	--		- Grâce à `CONSTRAINT UNIQUE_LIBELLE_INTERROGATION UNIQUE (id_groupe, libelle_interrogation, id_enseignement)`, 
+	--         on sait qu'il n'y aura pas deux même libelle_interrogation pour un groupe et un enseignement donné
+	--		- Il clique sur supprimer l'interrogation (on ne sait jamais, des fois qu'elle soit trop mauvaise ^^)
+	--			- Possibilité de ne proposer cette option que pour le prof responsable
+	--		- Pour chaque id_note qui match le libellé, le groupe et l'enseignement, supprimer la note
+
+	--@laurence
+	PROCEDURE supprInterro (id_enseign INTEGER, id_group INTEGER, libelle VARCHAR) IS
+		suppr INTEGER;
+
+		CURSOR curseurInterro IS
+			SELECT id_enseignement, id_group, libelle_interrogation, id_note
+			FROM NOTES n
+			WHERE n.id_enseignement = id_enseign AND n.id_groupe = id_group AND n.libelle_interrogation = libelle
+			FOR UPDATE;
+
+		ligne curseurInterro%ROWTYPE;
+
+	BEGIN
+		FOR ligne IN curseurInterro LOOP
+			DELETE FROM NOTES WHERE id_note = ligne.id_note;
+		END LOOP;
+		COMMIT;
+	END supprInterro;
+
+
+
+
+
+				-- ========================================================================== --
+				-- ========================================================================== --
+				-- ========================================================================== --
+
+
+
+	-- Procédure open_semester qui ouvre les semestres qui ont besoin d'être ouverts
+	--- Sélectionner tous les semestres qui ont semestre_ouvert à false
+	--	+ Si date_debut ≤ SYSDATE alors le mettre à vrai
+	--	+ Sinon ne rien faire
+
+	--@laurence
+	PROCEDURE open_semester IS
+		sem BOOLEAN;
+
+		CURSOR curseurdate IS
+			SELECT id_semestre, date_debut
+			FROM semestre
+			WHERE semestre_ouvert = 0
+			FOR UPDATE;
+
+		ligne curseurdate%ROWTYPE;
+
+	BEGIN
+		FOR ligne IN curseurdate LOOP
+			IF ligne.date_debut <= TO_DATE(SYSDATE, 'DD/MM/YY') THEN 
+				UPDATE semestre SET semestre_ouvert = 1
+				WHERE CURRENT OF curseurdate;
+			END IF;
+		END LOOP;
+		COMMIT;
+	END open_semester;
+
+
+
+
+
+				-- ========================================================================== --
+				-- ========================================================================== --
+				-- ========================================================================== --
+
+
+
+
+	--##### Procédure close_semester qui ferme les semestres qui ont besoin d'être fermés
+	--- Sélectionner tous les semestres qui ont semestre_termine à false
+	--	+ Si date_fin ≤ SYSDATE alors le mettre à vrai
+	--	+ Sinon ne rien faire
+
+	--@laurence
+	PROCEDURE close_semester IS
+		sem BOOLEAN;
+
+		CURSOR curseurdate IS
+			SELECT id_semestre, date_fin
+			FROM semestre
+			WHERE semestre_termine = 0
+			FOR UPDATE;
+
+		ligne curseurdate%ROWTYPE;
+
+	BEGIN
+		FOR ligne IN curseurdate LOOP
+			IF ligne.date_fin <= TO_DATE(SYSDATE, 'DD/MM/YY') THEN 
+				UPDATE semestre SET semestre_termine = 1
+				WHERE CURRENT OF curseurdate;
+			END IF;
+		END LOOP;
+		COMMIT;
+	END close_semester;
+
+
+
+
+
+
+
+				-- ========================================================================== --
+				-- ========================================================================== --
+				-- ========================================================================== --
+
 
 
 
