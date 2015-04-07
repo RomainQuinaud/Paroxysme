@@ -5,7 +5,8 @@
 -- @Romain
 -- Foncion qui prend en paramètre un id_user et un id_enseignement
 	-- Renvoi vrai si l'id_user correspond à celle du professeur responsable de la formation correspondant à l'enseignement
-	-- Renvoi faux sinon-- Package FONCTIONS_UTILES
+	-- Renvoi faux sinon
+	-- Package FONCTIONS_UTILES
 create or replace function isResponsable(idU utilisateur.id_user%type,id_ens enseignement.id_enseignement%type) return boolean AS
 	resp boolean := false; 
 	id_prof formation.id_prof_responsable%type;
@@ -20,8 +21,21 @@ BEGIN
 
 	return resp;
 END;
+/
+-- Fonctionne
+-- BEGIN
+-- if (isResponsable(2,1)) then DBMS_OUTPUT.PUT_LINE('toto');
+-- end if;
+-- end;
 
--- Manque test unitaires :)
+
+-- -- Ne fonctionne pas: tout va bien 
+-- BEGIN
+-- if (isResponsable(1,1)) then DBMS_OUTPUT.PUT_LINE('toto');
+-- end if;
+-- end;
+
+
 
 
 
