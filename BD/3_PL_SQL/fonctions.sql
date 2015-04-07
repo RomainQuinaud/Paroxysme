@@ -6,7 +6,7 @@
 -- Que fait la fonction ?
 -- Package FONCTIONS_UTILES
 create or replace function isResponsable(idU utilisateur.id_user%type,id_ens enseignement.id_enseignement%type) return boolean AS
-	resp boolean; -- pas d'initialisation ?
+	resp boolean := false; -- pas d'initialisation ?
 	id_prof formation.id_prof_responsable%type;
 BEGIN
 	select id_prof_responsable into id_prof
