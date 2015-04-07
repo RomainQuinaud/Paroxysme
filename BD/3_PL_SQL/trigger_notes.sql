@@ -5,13 +5,11 @@ CREATE OR REPLACE TRIGGER moyenne_etudiant_enseignement
 	FOR EACH ROW
 DECLARE
 	nbNotes number;
-	coef_CC number;
-	coef_DS number;
 BEGIN
 	IF(:NEW.type_note = 'CC')
 	THEN
 		-- Si l'étudiant a déjà une moyenne de calulée, elle est mise à jour
-		IF(is_stat_etu(:NEW.id_user, :NEW.id_enseignement, :NEW.id_groupe))
+		IF(fonctions_utiles.is_stat_etu(:NEW.id_user, :NEW.id_enseignement, :NEW.id_groupe))
 		THEN
 			-- Mise à jour du coefficient total du CC
 			UPDATE stats_enseignement_etudiant
@@ -41,32 +39,5 @@ BEGIN
 		WHERE id_user = :NEW.id_user
 		AND id_enseignement = :NEW.id_enseignement
 		AND id_groupe = :NEW.id_groupe;
-		
-		-- Mise à jour de la moyenne totale (qui était NULL)
-		SELECT coef_general INTO coef_CC
-		FROM type_note
-		WHERE type_note = 'CC';
-		SELECT coef_general INTO coef_DS
-		FROM type_note
-		WHERE type_note = 'DS';
-		
-		UPDATE stats_enseignement_etudiant
-		SET moy_etu_enseignement_total = (moy_etu_enseignement_CC * coef_CC + moy_etu_enseignement_DS * coef_DS) / (coef_CC+coef_DS)
-		WHERE id_user = :NEW.id_user
-		AND id_enseignement = :NEW.id_enseignement
-		AND id_groupe = :NEW.id_groupe;
 	END IF;
 END;
-
-/*
-Rapport d'erreur -
-ORA-00603: ORACLE server session terminated by fatal error
-ORA-00600: internal error code, arguments: [kqlidchg1], [], [], [], [], [], [], [], [], [], [], []
-ORA-00604: error occurred at recursive SQL level 1
-ORA-00001: unique constraint (SYS.I_PLSCOPE_SIG_IDENTIFIER$) violated
-00603. 00000 -  "ORACLE server session terminated by fatal error"
-*Cause:    An Oracle server session was in an unrecoverable state.
-*Action:   Log in to Oracle again so a new server session will be created
-           automatically.  Examine the session trace file for more
-           information.
-*/
