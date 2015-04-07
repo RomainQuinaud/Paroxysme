@@ -15,14 +15,17 @@ Procédure Supression d'une interrogation de contrôle continu de la part d'un p
 
 ## JEANNE
 
-- Trigger MOYENNE ETUDIANT ENSEIGNEMENT after each row sur la table NOTES
-	- mise à jour de la moyenne de l'enseignement en CC avec la nouvelle note entrée (table STATS_ENSEIGNEMENT_ETUDIANT)
-	- mise à jour de la moyenne de l'enseignement en DS si la note entrée est de type DS (copié collé de la note en fait)
-	- mise à jour de la moyenne générale de l'enseignement lorsque la note de DS est entrée
+Trigger sur la table STATS_ENSEIGNEMENT_ETUDIANT
 
+After UPDATE of moyenne_enseignement_CC (on each row ?)
 
+si moyenne_enseignement_DS est NULL => ne rien faire
+si moyenne_enseignement_DS n'est pas NULL
+relancer le calcul de la moyenne_enseignement_total avec la nouvelle valeur de la moyenne_enseignement_CC (moyenne_enseignement_total = moyenne_enseignement_CC*0,4 + moyenne_enseignement_DS*0,6)
 
+After INSERT or UPDATE of moyenne_enseignement_DS (on each row ?)
 
+lancer le calcul de la moyenne_enseignement_total avec la nouvelle valeur de la moyenne_enseignement_DS (moyenne_enseignement_total = moyenne_enseignement_CC*0,4 + moyenne_enseignement_DS*0,6)
 
 
 
