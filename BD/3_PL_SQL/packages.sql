@@ -14,7 +14,7 @@ CREATE OR REPLACE PACKAGE BODY FONCTIONS_UTILES IS
 		-- Renvoi vrai si l'id_user correspond à celle du professeur responsable de la formation correspondant à l'enseignement
 		-- Renvoi faux sinon
 	FUNCTION isResponsable(idU utilisateur.id_user%type,id_ens enseignement.id_enseignement%type) return boolean AS
-	 resp boolean; -- pas d'initialisation ?
+	 resp boolean := false; 
 	 id_prof formation.id_prof_responsable%type;
 	BEGIN
 	  SELECT id_prof_responsable into id_prof
@@ -25,7 +25,7 @@ CREATE OR REPLACE PACKAGE BODY FONCTIONS_UTILES IS
 			resp:=true;
 		END IF;
 
-	  RETURN resp; -- booléen initialisé directement à false ? Parce que si on ne passe pas dans le if, il n'est initialisé ni dans le bloc BEGIN ni dans le DECLARE
+	  RETURN resp; 
 	END isResponsable;
 
 

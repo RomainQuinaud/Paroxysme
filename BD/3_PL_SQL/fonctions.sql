@@ -3,10 +3,11 @@
 
 
 -- @Romain
--- Que fait la fonction ?
--- Package FONCTIONS_UTILES
+-- Foncion qui prend en paramètre un id_user et un id_enseignement
+	-- Renvoi vrai si l'id_user correspond à celle du professeur responsable de la formation correspondant à l'enseignement
+	-- Renvoi faux sinon-- Package FONCTIONS_UTILES
 create or replace function isResponsable(idU utilisateur.id_user%type,id_ens enseignement.id_enseignement%type) return boolean AS
-	resp boolean := false; -- pas d'initialisation ?
+	resp boolean := false; 
 	id_prof formation.id_prof_responsable%type;
 BEGIN
 	select id_prof_responsable into id_prof
@@ -17,7 +18,7 @@ BEGIN
 		resp:=true;
 	end if;
 
-	return resp; -- booléen initialisé directement à false ? Parce que si on ne passe pas dans le if, il n'est initialisé ni dans le bloc BEGIN ni dans le DECLARE
+	return resp;
 END;
 
 -- Manque test unitaires :)
