@@ -14,18 +14,8 @@ Procédure Supression d'une interrogation de contrôle continu de la part d'un p
 
 
 ## JEANNE
-
-Trigger sur la table STATS_ENSEIGNEMENT_ETUDIANT
-
-After UPDATE of moyenne_enseignement_CC (on each row ?)
-
-si moyenne_enseignement_DS est NULL => ne rien faire
-si moyenne_enseignement_DS n'est pas NULL
-relancer le calcul de la moyenne_enseignement_total avec la nouvelle valeur de la moyenne_enseignement_CC (moyenne_enseignement_total = moyenne_enseignement_CC*0,4 + moyenne_enseignement_DS*0,6)
-
-After INSERT or UPDATE of moyenne_enseignement_DS (on each row ?)
-
-lancer le calcul de la moyenne_enseignement_total avec la nouvelle valeur de la moyenne_enseignement_DS (moyenne_enseignement_total = moyenne_enseignement_CC*0,4 + moyenne_enseignement_DS*0,6)
+Trigger on stats_enseignement_etudiant
+After INSERT or UPDATE of moyenne_enseignement_total
 
 
 
