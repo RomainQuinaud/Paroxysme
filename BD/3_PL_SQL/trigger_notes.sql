@@ -39,3 +39,96 @@ BEGIN
 		AND id_groupe = :NEW.id_groupe;
 	END IF;
 END;
+
+
+
+
+
+
+
+
+
+-- ===================================================================================================================== -- 
+-- ===================================================================================================================== -- 
+-- ===================================================================================================================== -- 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- ===================================================================================================================== -- 
+-- ===================================================================================================================== -- 
+-- ===================================================================================================================== -- 
+
+
+
+
+--@Raphael
+-- After DELETE for each row (dans le cas d'une suppression)
+
+-- Exemple : un professeur veut supprimer une interrogation => cela supprimera les notes de tous les élèves du groupe pour cette interrogation là
+	-- si c'est une note de type CC
+		-- mise à jour de la moyenne (elle est forcément initialisée vu qu'on fait un delete)
+		-- si "coeff_total" = ":OLD.coef_note"
+			-- cela veut dire que la moyenne n'est calculée qu'à partir d'une seule note donc il va juste falloir la mettre à NULL (pas de division par zéro)
+		-- sinon, calcul de la nouvelle moyenne
+			-- moyenne = ( moyenne*coef_total - :OLD.note * :OLD.coef_note ) / ( coef_total - :OLD.coef_note )
+	-- si c'est une note de type DS
+		-- illogique de supprimer un DS donc gérer ca en java ou en trigger, mais empêcher la suppression d'une note de DS (seulement modifiable)
+
+
+CREATE OR REPLACE TRIGGER calcul_moy_etu_ens_when_delete AFTER DELETE ON NOTES FOR EACH ROW
+DECLARE
+	coefTotalTemp FLOAT;
+BEGIN
+	SELECT coef_total_CC INTO coefTotalTemp
+	FROM STATS_ENSEIGNEMENT_ETUDIANT
+	WHERE id_enseignement = :OLD.id_enseignement AND id_groupe=:OLD.id_groupe AND id_user = :OLD.id_user;
+
+	IF(:OLD.type_note = 'CC') THEN
+		IF (coefTotalTemp = :OLD.coef_note) THEN
+			UPDATE STATS_ENSEIGNEMENT_ETUDIANT
+			SET moy_etu_enseignement_CC = NULL, coef_total_CC=0
+			WHERE id_enseignement = :OLD.id_enseignement AND id_groupe=:OLD.id_groupe AND id_user = :OLD.id_user;
+		ELSE
+			UPDATE STATS_ENSEIGNEMENT_ETUDIANT
+			SET moy_etu_enseignement_CC = (moy_etu_enseignement_CC*coefTotalTemp - :OLD.valeur_note*:OLD.coef_note) / (coefTotalTemp - :OLD.coef_note), coef_total_CC = coef_total_CC-:OLD.coef_note
+			WHERE id_enseignement = :OLD.id_enseignement AND id_groupe=:OLD.id_groupe AND id_user = :OLD.id_user;
+		END IF;
+	END IF;
+	-- Pas de ELSE car on ne fait rien si c'est une note de DS supprimée (une note de DS n'est pas sencée être supprimée)
+END;
+
+
+-- Test
+--delete from notes where id_note = 14;
+	-- (note d'un id_user=12 dans id_enseignement=1 et id_semestre=1)
+	-- Il a deux notes, 12 et 15, et on supprime le 15, sa moyenne passe de 13,5 à 12 donc ok
+--delete from notes where id_note = 1;
+	-- On supprime sa deuxième note pour cette matière et ce semestre
+	-- Normalement sa moyenne passe à NULL et son coef total à 0
+	-- Ca marche
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
