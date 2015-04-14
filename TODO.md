@@ -24,6 +24,8 @@
 
 
 
+***
+***
 
 
 
@@ -45,14 +47,40 @@
 
 
 
+***
+***
+
+
+## VUES
+
+##### Pour les élèves (READ_ONLY)
+- Vue des formations dans lesquelles il est inscrit (si plusieurs au fil des années) : à faire
+- Vue des semestres pour une formation donnée : à faire
+- Vue des enseignements qu'il suit pour un semestre donné : à faire
+- Vue de ses notes CC pour un enseignement : à faire
+- Vue de ses notes DS pour un enseignement : à faire
+- Vue de ses moyennes pour un enseignement : à faire
+- Vue de ses moyennes pour un semestre : à faire
+
+##### Pour les profeseurs
+- Vue des formations dans lesquelles il enseigne : à faire
+	+ Si responsable d'une formation, liste des formations dont il est responsable à part
+- Vue des semestres pour une formation donnée : à faire
+- Vue des enseignements qu'il assure pour un semestre : à faire
+	+ Si il est responsable de la formation, vue de tous les enseignements du semestre
+- Vue des groupes auxquels il enseigne pour un enseignement donné : à faire
+	+ S'il est responsable de la formation, vue de tous les groupes par enseignement
+- Vue des interros de CC pour un groupe donné : à faire
+- Vue des notes de chaque élève (avec leurs noms) pour une interrogation donnée : à faire
+- Vue des notes de DS de chaque élève (avec leurs noms) pour une interrogation donnée : à faire
+- Vue des moyennes DS et CC pour chaque élève d'un groupe donné qui suit un de ses enseignement (donc pour cet enseignement aussi) : à faire
+	+ S'il est responsable de la formation, possibilité d'acceder à tous les enseignements et tous les groupes suivant ces enseignements donc à toutes les notes de CC ou de DS
 
 
 
 
-
-
-
-
+***
+***
 
 
 
@@ -166,7 +194,8 @@ end;
 
 
 
-
+***
+***
 
 ## PACKAGES
 
