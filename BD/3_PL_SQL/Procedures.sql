@@ -142,7 +142,7 @@ CREATE OR REPLACE PROCEDURE open_semester IS
 
 BEGIN
 	FOR ligne IN curseurDateToOpen LOOP
-		IF ligne.date_debut <= TO_DATE(SYSDATE, 'YYYY-MM-DD') THEN 
+		IF ligne.date_debut <= TO_DATE(SYSDATE, 'DD/MM/YY') THEN 
 			UPDATE semestre
 			SET semestre_ouvert = 1
 			WHERE CURRENT OF curseurDateToOpen;
@@ -185,7 +185,7 @@ create or replace PROCEDURE close_semester IS
 
 BEGIN
 	FOR ligne IN curseurDateToClose LOOP
-		IF ligne.date_fin <= TO_DATE(SYSDATE, 'YYYY-MM-DD') THEN 
+		IF ligne.date_fin <= TO_DATE(SYSDATE, 'DD/MM/YY') THEN 
 			UPDATE semestre
 			SET semestre_termine = 1
 			WHERE CURRENT OF curseurDateToClose;
