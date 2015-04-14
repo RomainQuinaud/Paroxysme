@@ -1,23 +1,30 @@
---@Jeanne
+--@Jeanne & Laurence
 -- Trigger qui met à jour les statistiques sur les moyennes de l'étudiant après insertion d'une note
 CREATE OR REPLACE TRIGGER moyenne_etudiant_enseignement
 	AFTER INSERT ON notes
 	FOR EACH ROW
+DECLARE
+	coef_CC number;
+	coef_DS number;
+	moyenneTotalTemp float;
+	moyenneCC float;
 BEGIN
 	IF(:NEW.type_note = 'CC')
 	THEN
 		-- Si l'étudiant a déjà une moyenne de calulée, elle est mise à jour
 		IF(fonctions_utiles.is_stat_etu(:NEW.id_user, :NEW.id_enseignement, :NEW.id_groupe))
 		THEN
-			-- Mise à jour du coefficient total du CC
+			
+			-- Mise à jour de la moyenne du CC
 			UPDATE stats_enseignement_etudiant
-			SET coef_total_CC = coef_total_CC + :NEW.coef_note
+			SET moy_etu_enseignement_CC = (moy_etu_enseignement_CC * coef_total_CC + (:NEW.valeur_note * :NEW.coef_note)) / (coef_total_CC + :NEW.coef_note)
 			WHERE id_user = :NEW.id_user
 			AND id_enseignement = :NEW.id_enseignement
 			AND id_groupe = :NEW.id_groupe;
-			-- Mise à jour de la moyenne du CC
+			
+			-- Mise à jour du coefficient total du CC
 			UPDATE stats_enseignement_etudiant
-			SET moy_etu_enseignement_CC = (moy_etu_enseignement_CC + (:NEW.valeur_note * :NEW.coef_note)) / (coef_total_CC)
+			SET coef_total_CC = coef_total_CC + :NEW.coef_note
 			WHERE id_user = :NEW.id_user
 			AND id_enseignement = :NEW.id_enseignement
 			AND id_groupe = :NEW.id_groupe;
@@ -37,10 +44,35 @@ BEGIN
 		WHERE id_user = :NEW.id_user
 		AND id_enseignement = :NEW.id_enseignement
 		AND id_groupe = :NEW.id_groupe;
+		
+		-- Calcul de la moyenne totale
+		coef_CC := fonctions_utiles.getCoefTypeNote('CC');
+		coef_DS := fonctions_utiles.getCoefTypeNote('DS');
+		
+		SELECT moy_etu_enseignement_CC INTO moyenneCC
+		FROM stats_enseignement_etudiant
+		WHERE id_user = :NEW.id_user
+		AND id_enseignement = :NEW.id_enseignement
+		AND id_groupe = :NEW.id_groupe;
+	
+		moyenneTotalTemp := (moyenneCC * coef_CC + :NEW.valeur_note * coef_DS) / (coef_CC+coef_DS);
+	
+		UPDATE stats_enseignement_etudiant
+		SET moy_etu_enseignement_total = moyenneTotalTemp
+		WHERE id_user = :NEW.id_user
+		AND id_enseignement = :NEW.id_enseignement
+		AND id_groupe = :NEW.id_groupe;
 	END IF;
 END;
 /
-
+-- Test
+-- les INSERT de base crééent bien une ligne par enseignement et par élève
+-- INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+-- 		(note.nextval, 12,1, 1, 'Interro n°x', to_date('2014-10-03', 'YYYY-MM-DD'), 20, 1, 'CC');
+-- La moyenne CC de l'étudiant 12 pour l'enseignement 1 augmente -> ok
+-- INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
+-- (note.nextval, 20,1, 1, 'Interro n°ff', to_date('2014-10-03', 'YYYY-MM-DD'), 15, 1, 'DS');
+-- Insertion de la moyenne DS et le la moyenne totale dans stats_enseignement_etudiant
 
 
 
