@@ -48,10 +48,10 @@
 
 
 ***
-***
 
 
-## VUES
+
+#### MODELE EN JAVA (classe qui va chercher les infos dans la DB)
 
 ##### Pour les élèves (READ_ONLY)
 - Vue des formations dans lesquelles il est inscrit (si plusieurs au fil des années) : à faire
