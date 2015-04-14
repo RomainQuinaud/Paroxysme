@@ -80,11 +80,10 @@ END calcul_moyenne_semestre;
 --		- Pour chaque id_note qui match le libellé, le groupe et l'enseignement, supprimer la note
 
 --@laurence
-CREATE OR REPLACE PROCEDURE supprInterro (id_enseign INTEGER, id_group INTEGER, libelle VARCHAR) IS
-	suppr INTEGER;
+CREATE OR REPLACE PROCEDURE supprInterro (id_enseign ENSEIGNEMENT.id_enseignement%TYPE, id_group GROUPE.id_groupe%TYPE, libelle NOTES.libelle_interrogation%TYPE) IS
 
 	CURSOR curseurInterro IS
-		SELECT id_enseignement, id_group, libelle_interrogation, id_note
+		SELECT id_enseignement, id_groupe, libelle_interrogation, id_note
 		FROM NOTES n
 		WHERE n.id_enseignement = id_enseign AND n.id_groupe = id_group AND n.libelle_interrogation = libelle
 		FOR UPDATE;
@@ -132,21 +131,21 @@ END supprInterro;
 
 --@laurence
 CREATE OR REPLACE PROCEDURE open_semester IS
-	sem BOOLEAN;
 
-	CURSOR curseurdate IS
+	CURSOR curseurDateToOpen IS
 		SELECT id_semestre, date_debut
 		FROM semestre
 		WHERE semestre_ouvert = 0
 		FOR UPDATE;
 
-	ligne curseurdate%ROWTYPE;
+	ligne curseurDateToOpen%ROWTYPE;
 
 BEGIN
-	FOR ligne IN curseurdate LOOP
-		IF ligne.date_debut <= TO_DATE(SYSDATE, 'DD/MM/YY') THEN 
-			UPDATE semestre SET semestre_ouvert = 1
-			WHERE CURRENT OF curseurdate;
+	FOR ligne IN curseurDateToOpen LOOP
+		IF ligne.date_debut <= TO_DATE(SYSDATE, 'YYYY-MM-DD') THEN 
+			UPDATE semestre
+			SET semestre_ouvert = 1
+			WHERE CURRENT OF curseurDateToOpen;
 		END IF;
 	END LOOP;
 	COMMIT;
@@ -175,21 +174,21 @@ END open_semester;
 
 --@laurence
 create or replace PROCEDURE close_semester IS
-	sem BOOLEAN;
 
-	CURSOR curseurdate IS
+	CURSOR curseurDateToClose IS
 		SELECT id_semestre, date_fin
 		FROM semestre
 		WHERE semestre_termine = 0
 		FOR UPDATE;
 
-	ligne curseurdate%ROWTYPE;
+	ligne curseurDateToClose%ROWTYPE;
 
 BEGIN
-	FOR ligne IN curseurdate LOOP
-		IF ligne.date_fin <= TO_DATE(SYSDATE, 'DD/MM/YY') THEN 
-			UPDATE semestre SET semestre_termine = 1
-			WHERE CURRENT OF curseurdate;
+	FOR ligne IN curseurDateToClose LOOP
+		IF ligne.date_fin <= TO_DATE(SYSDATE, 'YYYY-MM-DD') THEN 
+			UPDATE semestre
+			SET semestre_termine = 1
+			WHERE CURRENT OF curseurDateToClose;
 		END IF;
 	END LOOP;
 	COMMIT;

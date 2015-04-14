@@ -13,7 +13,7 @@ create or replace function isResponsable(idU utilisateur.id_user%type,id_ens ens
 BEGIN
 	select id_prof_responsable into id_prof
 	from formation natural join semestre natural join enseignement
-	where id_ens=enseignement.id_enseignement;
+	where enseignement.id_enseignement = id_ens;
 
 	if id_prof=idU then
 		resp:=true;

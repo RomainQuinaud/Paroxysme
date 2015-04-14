@@ -23,7 +23,7 @@ CREATE OR REPLACE PACKAGE BODY FONCTIONS_UTILES IS
 	BEGIN
 	  SELECT id_prof_responsable into id_prof
 	  FROM formation natural join semestre natural join enseignement
-	  WHERE id_ens=enseignement.id_enseignement;
+	  WHERE enseignement.id_enseignement = id_ens;
 
 		IF id_prof=idU THEN
 			resp:=true;
@@ -155,18 +155,17 @@ CREATE OR REPLACE PACKAGE BODY FONCTIONS_UTILES IS
 	--	- Professeur gère ses enseignement => il en sélectionne un (on a l'id_enseignement)
 	--	- Il sélectionne un des groupes qui suit cet enseignement (on a l'id_groupe)
 	--	- Il a alors la liste des interrogations
-	--		- Grâce à `CONSTRAINT UNIQUE_LIBELLE_INTERROGATION UNIQUE (id_groupe, libelle_interrogation, id_enseignement)`, 
+	--		- Grâce à `CONSTRAINT UNIQUE_LIBELLE_INTERROGATION UNIQUE (id_groupe, libelle_interrogation, id_enseignement, id_user)`, 
 	--         on sait qu'il n'y aura pas deux même libelle_interrogation pour un groupe et un enseignement donné
 	--		- Il clique sur supprimer l'interrogation (on ne sait jamais, des fois qu'elle soit trop mauvaise ^^)
-	--			- Possibilité de ne proposer cette option que pour le prof responsable
+	--			- Possibilité de ne proposer cette option que pour le prof responsable ??
 	--		- Pour chaque id_note qui match le libellé, le groupe et l'enseignement, supprimer la note
 
 	--@laurence
-	PROCEDURE supprInterro (id_enseign INTEGER, id_group INTEGER, libelle VARCHAR) IS
-		suppr INTEGER;
+	PROCEDURE supprInterro (id_enseign ENSEIGNEMENT.id_enseignement%TYPE, id_group GROUPE.id_groupe%TYPE, libelle NOTES.libelle_interrogation%TYPE) IS
 
 		CURSOR curseurInterro IS
-			SELECT id_enseignement, id_group, libelle_interrogation, id_note
+			SELECT id_enseignement, id_groupe, libelle_interrogation, id_note
 			FROM NOTES n
 			WHERE n.id_enseignement = id_enseign AND n.id_groupe = id_group AND n.libelle_interrogation = libelle
 			FOR UPDATE;
@@ -197,21 +196,21 @@ CREATE OR REPLACE PACKAGE BODY FONCTIONS_UTILES IS
 
 	--@laurence
 	PROCEDURE open_semester IS
-		sem BOOLEAN;
 
-		CURSOR curseurdate IS
+		CURSOR curseurDateToOpen IS
 			SELECT id_semestre, date_debut
 			FROM semestre
 			WHERE semestre_ouvert = 0
 			FOR UPDATE;
 
-		ligne curseurdate%ROWTYPE;
+		ligne curseurDateToOpen%ROWTYPE;
 
 	BEGIN
-		FOR ligne IN curseurdate LOOP
-			IF ligne.date_debut <= TO_DATE(SYSDATE, 'DD/MM/YY') THEN 
-				UPDATE semestre SET semestre_ouvert = 1
-				WHERE CURRENT OF curseurdate;
+		FOR ligne IN curseurDateToOpen LOOP
+			IF ligne.date_debut <= TO_DATE(SYSDATE, 'YYYY-MM-DD') THEN 
+				UPDATE semestre
+				SET semestre_ouvert = 1
+				WHERE CURRENT OF curseurDateToOpen;
 			END IF;
 		END LOOP;
 		COMMIT;
@@ -235,21 +234,21 @@ CREATE OR REPLACE PACKAGE BODY FONCTIONS_UTILES IS
 
 	--@laurence
 	PROCEDURE close_semester IS
-		sem BOOLEAN;
 
-		CURSOR curseurdate IS
+		CURSOR curseurDateToClose IS
 			SELECT id_semestre, date_fin
 			FROM semestre
 			WHERE semestre_termine = 0
 			FOR UPDATE;
 
-		ligne curseurdate%ROWTYPE;
+		ligne curseurDateToClose%ROWTYPE;
 
 	BEGIN
-		FOR ligne IN curseurdate LOOP
-			IF ligne.date_fin <= TO_DATE(SYSDATE, 'DD/MM/YY') THEN 
-				UPDATE semestre SET semestre_termine = 1
-				WHERE CURRENT OF curseurdate;
+		FOR ligne IN curseurDateToClose LOOP
+			IF ligne.date_fin <= TO_DATE(SYSDATE, 'YYYY-MM-DD') THEN 
+				UPDATE semestre
+				SET semestre_termine = 1
+				WHERE CURRENT OF curseurDateToClose;
 			END IF;
 		END LOOP;
 		COMMIT;
