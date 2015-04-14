@@ -207,6 +207,26 @@ END close_semester;
 
 
 
+-- ===================================================================================================================== -- 
+-- ===================================================================================================================== -- 
+-- ===================================================================================================================== -- 
+
+
+--##### Procedure d'update de la table STATS_ENSEIGNEMENT_ETUDIANT afin d'eviter une erreur de "mutating table" avec le trigger moy_ens_total_when_update_DS
+--- Déclaration de la procédure avec "pragma autonomous_transaction" (attention aux boucles infinies !!)
+
+--@Raphael
+CREATE OR REPLACE PROCEDURE updateMoyEnsGenerale (idUser UTILISATEUR.id_user%TYPE, idEns ENSEIGNEMENT.id_enseignement%TYPE, idGroupe GROUPE.id_groupe%TYPE, newMoy FLOAT) IS PRAGMA AUTONOMOUS_TRANSACTION;
+BEGIN
+	UPDATE stats_enseignement_etudiant
+	SET moy_etu_enseignement_total = newMoy
+	WHERE id_user = idUser
+	AND id_enseignement = idEns
+	AND id_groupe = idGroupe;
+
+	COMMIT;
+END updateMoyEnsGenerale;
+
 
 
 

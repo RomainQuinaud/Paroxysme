@@ -5,9 +5,10 @@ CREATE OR REPLACE PACKAGE FONCTIONS_UTILES IS
 	FUNCTION is_stat_etu (id_etu IN etudiant.id_user%type, id_ens IN enseignement.id_enseignement%type, id_gr IN groupe.id_groupe%type) RETURN boolean;
 	FUNCTION is_stat_sem_etu (id_etu IN etudiant.id_user%type, id_sem IN semestre.id_semestre%type, id_gr IN groupe.id_groupe%type) RETURN boolean;
 	FUNCTION getCoefTypeNote (unType TYPE_NOTE.type_note%TYPE) RETURN FLOAT;
-	PROCEDURE supprInterro (id_enseign INTEGER, id_group INTEGER, libelle VARCHAR);
+	PROCEDURE supprInterro (id_enseign ENSEIGNEMENT.id_enseignement%TYPE, id_group GROUPE.id_groupe%TYPE, libelle NOTES.libelle_interrogation%TYPE);
 	PROCEDURE open_semester;
 	PROCEDURE close_semester;
+	PROCEDURE updateMoyEnsGenerale (idUser UTILISATEUR.id_user%TYPE, idEns ENSEIGNEMENT.id_enseignement%TYPE, idGroupe GROUPE.id_groupe%TYPE, newMoy FLOAT);
 END FONCTIONS_UTILES;
 /
 
@@ -265,6 +266,30 @@ CREATE OR REPLACE PACKAGE BODY FONCTIONS_UTILES IS
 				-- ========================================================================== --
 
 
+
+--##### Procedure d'update de la table STATS_ENSEIGNEMENT_ETUDIANT afin d'eviter une erreur de "mutating table" avec le trigger moy_ens_total_when_update_DS
+--- Déclaration de la procédure avec "pragma autonomous_transaction" (attention aux boucles infinies !!)
+
+--@Raphael
+
+PROCEDURE updateMoyEnsGenerale (idUser UTILISATEUR.id_user%TYPE, idEns ENSEIGNEMENT.id_enseignement%TYPE, idGroupe GROUPE.id_groupe%TYPE, newMoy FLOAT) IS PRAGMA AUTONOMOUS_TRANSACTION;
+BEGIN
+	UPDATE stats_enseignement_etudiant
+	SET moy_etu_enseignement_total = newMoy
+	WHERE id_user = idUser
+	AND id_enseignement = idEns
+	AND id_groupe = idGroupe;
+
+	COMMIT;
+END updateMoyEnsGenerale;
+
+
+
+
+
+				-- ========================================================================== --
+				-- ========================================================================== --
+				-- ========================================================================== --
 
 
 

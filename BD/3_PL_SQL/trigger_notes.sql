@@ -39,7 +39,7 @@ BEGIN
 		AND id_groupe = :NEW.id_groupe;
 	END IF;
 END;
-
+/
 
 
 
@@ -91,7 +91,7 @@ BEGIN
 	END IF;
 
 END;
-
+/
 -- Tests Unitaires
 -- test sur les notes de id_user = 12 and id_groupe=1 and id_enseignement=1
 -- test pour update d'une note de CC
@@ -161,7 +161,7 @@ BEGIN
 	END IF;
 	-- Pas de ELSE car on ne fait rien si c'est une note de DS supprimée (une note de DS n'est pas sencée être supprimée)
 END;
-
+/
 
 -- Test
 --delete from notes where id_note = 14;
