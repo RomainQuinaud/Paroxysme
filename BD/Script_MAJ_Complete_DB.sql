@@ -231,9 +231,6 @@ CREATE TABLE STATS_SEMESTRE_ETUDIANT (
 -- drop table UTILISATEUR;
 
 
-
-
-
 CREATE OR REPLACE PACKAGE FONCTIONS_UTILES IS
 	FUNCTION isResponsable(idU utilisateur.id_user%TYPE, id_ens enseignement.id_enseignement%TYPE) RETURN BOOLEAN;
 	FUNCTION getCoefEnseignement (id_ens enseignement.id_enseignement%type) RETURN FLOAT;
@@ -444,7 +441,7 @@ CREATE OR REPLACE PACKAGE BODY FONCTIONS_UTILES IS
 
 	BEGIN
 		FOR ligne IN curseurDateToOpen LOOP
-			IF ligne.date_debut <= TO_DATE(SYSDATE, 'YYYY-MM-DD') THEN 
+			IF ligne.date_debut <= TO_DATE(SYSDATE, 'DD/MM/YY') THEN 
 				UPDATE semestre
 				SET semestre_ouvert = 1
 				WHERE CURRENT OF curseurDateToOpen;
@@ -482,7 +479,7 @@ CREATE OR REPLACE PACKAGE BODY FONCTIONS_UTILES IS
 
 	BEGIN
 		FOR ligne IN curseurDateToClose LOOP
-			IF ligne.date_fin <= TO_DATE(SYSDATE, 'YYYY-MM-DD') THEN 
+			IF ligne.date_fin <= TO_DATE(SYSDATE, 'DD/MM/YY') THEN 
 				UPDATE semestre
 				SET semestre_termine = 1
 				WHERE CURRENT OF curseurDateToClose;
@@ -610,6 +607,8 @@ CREATE OR REPLACE PACKAGE BODY STATISTIQUES IS
 
 END STATISTIQUES;
 /
+
+
 
 
 
