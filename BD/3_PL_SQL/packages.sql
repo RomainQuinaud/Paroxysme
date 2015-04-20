@@ -319,6 +319,7 @@ END FONCTIONS_UTILES;
 
 CREATE OR REPLACE PACKAGE STATISTIQUES IS
 	PROCEDURE calcul_moyenne_semestre (idEleve UTILISATEUR.id_user%type, sonGroupe GROUPE.id_groupe%type, idEns ENSEIGNEMENT.id_enseignement%TYPE, moyenneSemestreCC OUT FLOAT, moyenneSemestreDS OUT FLOAT, moyenneSemestreTotal OUT FLOAT);
+	PROCEDURE update_moy_semestre (id_etu utilisateur.id_user%TYPE, id_gr groupe.id_groupe%TYPE, id_ens enseignement.id_enseignement%TYPE);
 END STATISTIQUES;
 /
 
@@ -370,6 +371,26 @@ CREATE OR REPLACE PACKAGE BODY STATISTIQUES IS
 				-- ========================================================================== --
 				-- ========================================================================== --
 				-- ========================================================================== --
+				
+	-- Procédure qui met à jour la table stats_semestre_etudiant (utilisée dans les trigger sur NOTES)
+	PROCEDURE update_moy_semestre (id_etu utilisateur.id_user%TYPE, id_gr groupe.id_groupe%TYPE, id_ens enseignement.id_enseignement%TYPE) IS
+		moyenneSemestreCC number(4,2);
+		moyenneSemestreDS number(4,2);
+		moyenneSemestreTotal number(4,2);
+		id_sem INTEGER := FONCTIONS_UTILES.getIDSemestre(id_ens);
+	BEGIN
+		statistiques.calcul_moyenne_semestre(id_etu, id_gr, id_ens, moyenneSemestreCC, moyenneSemestreDS, moyenneSemestreTotal);
+		-- Si l'étudiant a déjà bénéficié d'un calcul de moyenne de semestre pour le semestre concerné par l'update -> mise à jour
+		IF(fonctions_utiles.is_stat_sem_etu(id_etu, id_sem, id_gr))
+		THEN
+			UPDATE stats_semestre_etudiant
+			SET moy_etu_semestre_CC = moyenneSemestreCC, moy_etu_semestre_DS = moyenneSemestreDS, moy_etu_semestre_total = moyenneSemestreTotal
+			WHERE id_user = id_etu AND id_groupe = id_gr AND id_semestre = id_sem;
+		ELSE -- sinon -> insertion
+			INSERT INTO stats_semestre_etudiant
+			VALUES (id_etu, id_gr, id_sem, moyenneSemestreCC, moyenneSemestreDS, moyenneSemestreTotal);	
+		END IF;
+	END update_moy_semestre;
 
 
 END STATISTIQUES;

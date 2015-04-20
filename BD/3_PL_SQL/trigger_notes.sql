@@ -1,14 +1,15 @@
 --@Jeanne & Laurence
 -- Trigger qui met à jour les statistiques sur les moyennes de l'étudiant après insertion d'une note
-CREATE OR REPLACE TRIGGER moyenne_etudiant_enseignement
+CREATE OR REPLACE TRIGGER calcul_moy_etu_ens_when_insert
 	AFTER INSERT ON notes
 	FOR EACH ROW
 DECLARE
 	coef_CC number;
 	coef_DS number;
-	moyenneTotalTemp float;
-	moyenneCC float;
-	moyenneDS float;
+	moyenneTotalTemp number(4,2);
+	moyenneCC number(4,2);
+	coefTotalCC number;
+	moyenneDS number(4,2);
 BEGIN
 	IF(:NEW.type_note = 'CC')
 	THEN
@@ -16,33 +17,31 @@ BEGIN
 		IF(fonctions_utiles.is_stat_etu(:NEW.id_user, :NEW.id_enseignement, :NEW.id_groupe))
 		THEN
 			
-			-- Mise à jour de la moyenne du CC
-			UPDATE stats_enseignement_etudiant
-			SET moy_etu_enseignement_CC = (moy_etu_enseignement_CC * coef_total_CC + (:NEW.valeur_note * :NEW.coef_note)) / (coef_total_CC + :NEW.coef_note)
-			WHERE id_user = :NEW.id_user AND id_enseignement = :NEW.id_enseignement	AND id_groupe = :NEW.id_groupe;
-			
-			-- Mise à jour du coefficient total du CC
-			UPDATE stats_enseignement_etudiant
-			SET coef_total_CC = coef_total_CC + :NEW.coef_note
+			-- Mise à jour de la moyenne du CC et du coefficient total du CC
+			SELECT moy_etu_enseignement_CC, coef_total_CC INTO moyenneCC, coefTotalCC
+			FROM stats_enseignement_etudiant
 			WHERE id_user = :NEW.id_user AND id_enseignement = :NEW.id_enseignement AND id_groupe = :NEW.id_groupe;
+			moyenneCC := (moyenneCC * coefTotalCC + :NEW.valeur_note * :NEW.coef_note) / (coefTotalCC + :NEW.coef_note);
+			coefTotalCC := coefTotalCC + :NEW.coef_note;
+			UPDATE stats_enseignement_etudiant
+			SET moy_etu_enseignement_CC = moyenneCC, coef_total_CC = coefTotalCC
+			WHERE id_user = :NEW.id_user AND id_enseignement = :NEW.id_enseignement	AND id_groupe = :NEW.id_groupe;
 			
 			-- Mise à jour de la moyenne totale (si l'étudiant a déjà une note de DS)
 			SELECT moy_etu_enseignement_DS INTO moyenneDS
 			FROM stats_enseignement_etudiant
 			WHERE id_user = :NEW.id_user AND id_enseignement = :NEW.id_enseignement AND id_groupe = :NEW.id_groupe;
-			
 			IF(moyenneDS is not null)
 			THEN
 				coef_CC := fonctions_utiles.getCoefTypeNote('CC');
 				coef_DS := fonctions_utiles.getCoefTypeNote('DS');
 				
-				SELECT moy_etu_enseignement_CC INTO moyenneCC
-				FROM stats_enseignement_etudiant
-				WHERE id_user = :NEW.id_user AND id_enseignement = :NEW.id_enseignement AND id_groupe = :NEW.id_groupe;
 				moyenneTotalTemp := (moyenneCC * coef_CC + moyenneDS * coef_DS) / (coef_CC+coef_DS);
 				UPDATE stats_enseignement_etudiant
 				SET moy_etu_enseignement_total = moyenneTotalTemp
 				WHERE id_user = :NEW.id_user AND id_enseignement = :NEW.id_enseignement AND id_groupe = :NEW.id_groupe;
+				-- Mise à jour de sa moyenne dans la table stats_semestre_etudiant
+				statistiques.update_moy_semestre(:NEW.id_user, :NEW.id_groupe, :NEW.id_enseignement);
 			END IF;
 		
 		ELSE -- Si l'étudiant n'a pas encore de moyenne, elle est créée à partir de la nouvelle note
@@ -70,6 +69,8 @@ BEGIN
 		UPDATE stats_enseignement_etudiant
 		SET moy_etu_enseignement_total = moyenneTotalTemp
 		WHERE id_user = :NEW.id_user AND id_enseignement = :NEW.id_enseignement AND id_groupe = :NEW.id_groupe;
+		-- Mise à jour de sa moyenne dans la table stats_semestre_etudiant
+		statistiques.update_moy_semestre(:NEW.id_user, :NEW.id_groupe, :NEW.id_enseignement);
 	END IF;
 END;
 /
@@ -109,12 +110,12 @@ END;
 CREATE OR REPLACE TRIGGER calcul_moy_etu_ens_when_update BEFORE UPDATE OF valeur_note, coef_note ON NOTES FOR EACH ROW
 
 DECLARE
-	moyenneCC FLOAT;
+	moyenneCC number(4,2);
 	coeftotal FLOAT;
-	moyenneDS float;
+	moyenneDS number(4,2);
 	coef_CC number;
 	coef_DS number;
-	moyenneTotalTemp float;
+	moyenneTotalTemp number(4,2);
 BEGIN
 
 	SELECT coef_total_CC, moy_etu_enseignement_CC INTO coeftotal, moyenneCC
@@ -141,6 +142,8 @@ BEGIN
 				UPDATE stats_enseignement_etudiant
 				SET moy_etu_enseignement_total = moyenneTotalTemp
 				WHERE id_user = :NEW.id_user AND id_enseignement = :NEW.id_enseignement AND id_groupe = :NEW.id_groupe;
+				-- Mise à jour de sa moyenne dans la table stats_semestre_etudiant
+				statistiques.update_moy_semestre(:NEW.id_user, :NEW.id_groupe, :NEW.id_enseignement);
 			END IF;
 	ELSE
 		UPDATE STATS_ENSEIGNEMENT_ETUDIANT
@@ -158,6 +161,8 @@ BEGIN
 		UPDATE stats_enseignement_etudiant
 		SET moy_etu_enseignement_total = moyenneTotalTemp
 		WHERE id_user = :NEW.id_user AND id_enseignement = :NEW.id_enseignement AND id_groupe = :NEW.id_groupe;
+		-- Mise à jour de sa moyenne dans la table stats_semestre_etudiant
+		statistiques.update_moy_semestre(:NEW.id_user, :NEW.id_groupe, :NEW.id_enseignement);
 	END IF;
 
 END;
@@ -213,10 +218,11 @@ END;
 CREATE OR REPLACE TRIGGER calcul_moy_etu_ens_when_delete AFTER DELETE ON NOTES FOR EACH ROW
 DECLARE
 	coefTotalTemp FLOAT;
-	moyenneDS float;
-	moyenneCC float;
+	moyenneDS number(4,2);
+	moyenneCC number(4,2);
 	coef_CC number;
 	coef_DS number;
+	moyenneTotalTemp number(4,2);
 BEGIN
 	SELECT coef_total_CC INTO coefTotalTemp
 	FROM STATS_ENSEIGNEMENT_ETUDIANT
@@ -237,6 +243,8 @@ BEGIN
 				UPDATE STATS_ENSEIGNEMENT_ETUDIANT
 				SET moy_etu_enseignement_total = moyenneDS
 				WHERE id_enseignement = :OLD.id_enseignement AND id_groupe=:OLD.id_groupe AND id_user = :OLD.id_user;
+				-- Mise à jour de sa moyenne dans la table stats_semestre_etudiant
+				statistiques.update_moy_semestre(:OLD.id_user, :OLD.id_groupe, :OLD.id_enseignement);
 			END IF;
 			
 		ELSE
@@ -256,9 +264,12 @@ BEGIN
 			THEN
 				coef_CC := fonctions_utiles.getCoefTypeNote('CC');
 				coef_DS := fonctions_utiles.getCoefTypeNote('DS');
+				moyenneTotalTemp := (moyenneCC*coef_CC+moyenneDS*coef_DS)/(coef_CC+coef_DS);
 				UPDATE STATS_ENSEIGNEMENT_ETUDIANT
-				SET moy_etu_enseignement_total = (moyenneCC*coef_CC+moyenneDS*coef_DS)/(coef_CC+coef_DS)
+				SET moy_etu_enseignement_total = moyenneTotalTemp
 				WHERE id_enseignement = :OLD.id_enseignement AND id_groupe=:OLD.id_groupe AND id_user = :OLD.id_user;
+				-- Mise à jour de sa moyenne dans la table stats_semestre_etudiant
+				statistiques.update_moy_semestre(:OLD.id_user, :OLD.id_groupe, :OLD.id_enseignement);
 			END IF;
 			
 		END IF;
@@ -267,6 +278,8 @@ BEGIN
 		UPDATE stats_enseignement_etudiant
 		SET moy_etu_enseignement_DS = null, moy_etu_enseignement_total = null
 		WHERE id_enseignement = :OLD.id_enseignement AND id_groupe=:OLD.id_groupe AND id_user = :OLD.id_user;
+		-- Mise à jour de sa moyenne dans la table stats_semestre_etudiant
+		statistiques.update_moy_semestre(:OLD.id_user, :OLD.id_groupe, :OLD.id_enseignement);
 	END IF;
 END;
 /
@@ -279,18 +292,4 @@ END;
 	-- On supprime sa deuxième note pour cette matière et ce semestre
 	-- Normalement sa moyenne passe à NULL et son coef total à 0
 	-- Ca marche
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
