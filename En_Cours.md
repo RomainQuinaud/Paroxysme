@@ -26,7 +26,8 @@ Tests et corrections sur mes triggers
 
 
 - Implémentation de l'interface.
-On passe a java swing comme en cours pour que tout le monde puisse touher a l'interface
+On passe à java swing comme en cours pour que tout le monde puisse toucher a l'interface
+Et en essayant de le faire en MVC. Je pense entamer une bonne partie de l'interface demain après midi (Mardi 21/04/15).
 
 
 
