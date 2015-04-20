@@ -14,7 +14,7 @@ Procédure Supression d'une interrogation de contrôle continu de la part d'un p
 
 
 ## JEANNE
-Tests et corrections sur mes triggers
+
 
 
 
