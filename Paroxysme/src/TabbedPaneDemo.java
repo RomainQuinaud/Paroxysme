@@ -56,9 +56,9 @@ public class TabbedPaneDemo extends JPanel {
         JTabbedPane tabbedPane = new JTabbedPane();
         ImageIcon icon = createImageIcon("images/middle.gif");
 
-        JComponent panel1 = makeTextPanel("Panel #1");
-        tabbedPane.addTab("Tab 1", icon, panel1,
-                "Does nothing");
+        //JComponent panel1 = makeTextPanel("Panel #1");
+        Enseignement toto=new Enseignement();
+        tabbedPane.addTab("Tab 1", icon, toto);
         tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
 
         JComponent panel2 = makeTextPanel("Panel #2");
@@ -73,7 +73,7 @@ public class TabbedPaneDemo extends JPanel {
 
         JComponent panel4 = makeTextPanel(
                 "Panel #4 (has a preferred size of 410 x 50).");
-        panel4.setPreferredSize(new Dimension(410, 50));
+        panel4.setPreferredSize(new Dimension(1000, 500));
         tabbedPane.addTab("Tab 4", icon, panel4,
                 "Does nothing at all");
         tabbedPane.setMnemonicAt(3, KeyEvent.VK_4);
