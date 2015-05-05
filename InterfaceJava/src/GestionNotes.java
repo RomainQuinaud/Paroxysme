@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 /**
@@ -13,10 +14,16 @@ public class GestionNotes extends JFrame {
         this.login=login;
         setTitle("Paroxysme");
         setSize(500, 500);
-         setLayout(new FlowLayout());
+         setLayout(new BorderLayout());
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+        JLabel toto=new JLabel(login);
+        toto.setFont(new Font("Arial", Font.PLAIN, 20));
+        toto.setBorder(new EmptyBorder(0,0,0,10));
+        toto.setHorizontalAlignment(SwingConstants.RIGHT);
+        this.add(toto,BorderLayout.NORTH);
         TabbedPaneDemo pane=new TabbedPaneDemo();
-        this.add(pane);
+        this.add(pane,BorderLayout.CENTER);
         this.pack();
 
         this.setVisible(true);

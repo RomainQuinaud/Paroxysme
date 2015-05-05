@@ -49,7 +49,14 @@ public class TabbedPaneDemo extends JPanel {
         ImageIcon icon = new ImageIcon();
 
         //JComponent panel1 = makeTextPanel("Panel #1");
+
+
+
         Enseignement toto=new Enseignement();
+
+
+
+
         tabbedPane.addTab("Tab 1", icon, toto);
         tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
 
@@ -99,6 +106,7 @@ public class TabbedPaneDemo extends JPanel {
         //Create and set up the window.
         JFrame frame = new JFrame("TabbedPaneDemo");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 
         //Add content to the window.
         frame.add(new TabbedPaneDemo(), BorderLayout.CENTER);
