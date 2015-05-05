@@ -22,6 +22,7 @@ public class Enseignement extends JPanel{
         String[] entetes = {"Prénom", "Nom", "Couleur favorite", "Homme", "Sport"};
 
         JTable tableau = new JTable(donnees, entetes);
+        tableau.setEnabled(false);
 
         this.add(tableau);
     }
