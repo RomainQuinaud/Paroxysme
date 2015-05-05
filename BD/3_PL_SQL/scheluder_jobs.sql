@@ -2,7 +2,7 @@ begin
   dbms_scheduler.create_job (
     job_name => 'MAJ_SEMESTERS',  -- Choose some name. 
     job_type => 'PLSQL_BLOCK',
-    job_action => 'begin Fonctions_Utiles.open_semester; Fonctions_Utiles.close_semester; insertIntoLog; end;',
+    job_action => 'begin Fonctions_Utiles.open_semester; Fonctions_Utiles.close_semester; end;',
     start_date => SYSDATE,
     repeat_interval => 'FREQ=DAILY',
     enabled => TRUE,
