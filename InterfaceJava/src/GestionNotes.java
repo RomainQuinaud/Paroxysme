@@ -7,7 +7,7 @@ import java.awt.*;
  */
 public class GestionNotes extends JFrame {
 
-        String login;
+    static String login;
 
     public GestionNotes(String login){
 

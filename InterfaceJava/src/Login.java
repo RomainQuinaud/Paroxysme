@@ -15,7 +15,7 @@ import java.sql.SQLException;
  */
 public class Login extends JFrame{
 
-
+    static Connection conn;
     private JPanel form;
     private JLabel login;
     private JTextField in_login;
@@ -82,7 +82,7 @@ public class Login extends JFrame{
                 String url = "jdbc:oracle:thin:";
 
                 url += log + "/" + mdp + "@178.32.163.231:1521:xe";
-                Connection conn = null;
+                conn = null;
                 try {
                     conn = DriverManager.getConnection(url);
 

@@ -39,6 +39,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.sql.*;
 
 public class TabbedPaneDemo extends JPanel {
     public TabbedPaneDemo() {
@@ -47,6 +48,31 @@ public class TabbedPaneDemo extends JPanel {
         JTabbedPane tabbedPane = new JTabbedPane();
         //ImageIcon icon = createImageIcon("images/middle.gif");
         ImageIcon icon = new ImageIcon();
+
+        /*
+        try {
+            //Professeur ou étudiant ?
+            String req = "SELECT id_user FROM utilisateur NATURAL JOIN professeur WHERE lower(login) = lower(?)";
+            PreparedStatement stm = Login.conn.prepareStatement(req);
+            stm.setString(1, GestionNotes.login);
+            ResultSet result = stm.executeQuery();
+            if(!result.wasNull()){
+                System.out.println("c'est un professeur");
+            }
+            else{
+                req = "SELECT id_user FROM utilisateur NATURAL JOIN etudiant WHERE lower(login) = lower(?)";
+                stm = Login.conn.prepareStatement(req);
+                stm.setString(1, GestionNotes.login);
+                result = stm.executeQuery();
+                if(!result.wasNull()){
+                    System.out.println("c'est un étudiant");
+                }
+            }
+        }
+        catch(SQLException e){
+            System.out.println("problème de connection");
+        }
+        */
 
         //JComponent panel1 = makeTextPanel("Panel #1");
 
