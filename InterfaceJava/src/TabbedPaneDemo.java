@@ -60,9 +60,8 @@ public class TabbedPaneDemo extends JPanel {
         tabbedPane.addTab("Tab 1", icon, toto);
         tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
 
-        JComponent panel2 = makeTextPanel("Panel #2");
-        tabbedPane.addTab("Tab 2", icon, panel2,
-                "Does twice as much nothing");
+        AjoutControle ajoutCtrl = new AjoutControle(1,1);
+        tabbedPane.addTab("Ajouter un controle", icon, ajoutCtrl);
         tabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
 
         JComponent panel3 = makeTextPanel("Panel #3");
