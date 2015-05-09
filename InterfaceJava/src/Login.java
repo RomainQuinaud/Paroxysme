@@ -2,7 +2,7 @@
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
-
+import javax.swing.UIManager.LookAndFeelInfo;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -114,6 +114,19 @@ public class Login extends JFrame{
 
 
     public static void main(String[] args) {
+        /* SET THE STYLE OF THE APPLICATION */
+        try {
+            for(LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+                if("Nimbus".equals(info.getName())) {
+                    UIManager.setLookAndFeel(info.getClassName());
+                    UIManager.getLookAndFeelDefaults().put("nimbusOrange", (new Color(42, 204, 50)));
+                    break;
+                }
+            }
+        }
+        catch(Exception e) {
+            System.err.println("Unable to set the selected Look'n'Feel :\n" + e.getMessage());
+        }
 
         new Login();
 
