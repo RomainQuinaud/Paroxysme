@@ -405,7 +405,4 @@ public class DialogAjoutGroupe extends JDialog {
 
 
 
-    public static void main(String[] args) {
-        new DialogAjoutGroupe(new JFrame(), new Modele());
-    }
 }

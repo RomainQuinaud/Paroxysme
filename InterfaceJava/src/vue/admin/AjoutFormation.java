@@ -357,9 +357,6 @@ public class AjoutFormation extends JDialog {
     private JDialog getThidJDialog () {
         return this;
     }
-    public static void main(String[] args) {
-        new AjoutFormation(null, new Modele());
-    }
 
     private void activateSemestre() {
 
@@ -371,19 +368,16 @@ public class AjoutFormation extends JDialog {
         }
     }
 
-    public void ajoutPanneauCourant(JPanel panel) {
-        this.add(panel);
-    }
 
-    public void dialogMAJ() {
+    private void dialogMAJ() {
         this.setVisible(true);
     }
 
-    public int getIdSemestre() {
+    private int getIdSemestre() {
         return idSemestre;
     }
 
-    public void setIdSemestre(int idSemestre) {
+    private void setIdSemestre(int idSemestre) {
         this.idSemestre = idSemestre;
     }
 

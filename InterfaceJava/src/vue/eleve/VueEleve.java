@@ -384,9 +384,5 @@ public class VueEleve extends JFrame {
     /** =======================================  Fonctions Utiles  ========================================================= */
 
 
-    public static void main(String[] args) {
-        Modele modeleTest = new Modele();
-        VueEleve test = new VueEleve(modeleTest, 16);
-    }
 
 }

@@ -228,7 +228,5 @@ public class AjoutControle extends JDialog implements ActionListener{
     }
 
 
-    //public static void main(String[] args) {
-    //  AjoutControle test = new AjoutControle(new JFrame(), new Modele(), 3, 1, 0, "Partiel de Programmations");
-    // }
+
 }

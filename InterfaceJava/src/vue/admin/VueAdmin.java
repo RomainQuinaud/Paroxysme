@@ -104,9 +104,6 @@ public class VueAdmin extends JFrame {
         return this;
     }
 
-    public static void main(String[] args) {
-        new VueAdmin(new Modele(), 2);
-    }
 
 
 }

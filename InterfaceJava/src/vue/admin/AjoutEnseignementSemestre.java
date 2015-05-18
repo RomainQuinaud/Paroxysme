@@ -356,7 +356,4 @@ public class AjoutEnseignementSemestre extends JDialog implements ActionListener
 
 
 
-    public static void main(String[] args) {
-        new AjoutEnseignementSemestre(null, new Modele(),2);
-    }
 }

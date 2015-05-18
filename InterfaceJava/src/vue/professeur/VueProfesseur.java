@@ -661,9 +661,6 @@ public class VueProfesseur extends JFrame {
         return this;
     }
 
-    public static void main(String[] args) {
-        Modele modeleTest = new Modele();
-        VueProfesseur test = new VueProfesseur(modeleTest, 2);
-    }
+
 
 }

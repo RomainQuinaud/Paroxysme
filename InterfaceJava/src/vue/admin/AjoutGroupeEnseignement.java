@@ -161,10 +161,4 @@ public class AjoutGroupeEnseignement extends JDialog implements ActionListener, 
     }
 
 
-    public static void main(String[] args) {
-
-        new AjoutGroupeEnseignement(new Modele(), new JDialog(), 24, 1, 1);
-
-    }
-
 }

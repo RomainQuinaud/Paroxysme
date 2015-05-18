@@ -76,11 +76,4 @@ public class ChoixAdminProf extends JDialog {
         new VueAdmin(modele, idUser);
     }
 
-
-    public static void main(String[] args) {
-        new ChoixAdminProf(null, new Modele(), 2);
-    }
-
-
-
 }

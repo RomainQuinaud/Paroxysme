@@ -261,7 +261,4 @@ public class DialogCreationEleve extends JDialog implements DocumentListener, Fo
 
         valider.setEnabled(false);
     }
-    public static void main(String[] args) {
-        new DialogCreationEleve(null, new Modele(), 1);
-    }
 }
