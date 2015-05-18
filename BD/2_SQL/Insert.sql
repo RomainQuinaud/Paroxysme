@@ -1,26 +1,27 @@
 -- UTILISATEURS/PROFESSEURS : id de 1 à 11
 create sequence id;
-INSERT INTO utilisateur VALUES(id.nextval, 'cdupuis','Dupuis','Charlie','ch.dupuis@limsi.fr');
+INSERT INTO utilisateur VALUES(id.nextval, 'cdupuis','Dupuis','Charlie','ch.dupuis@limsi.fr', 'password');
 INSERT INTO professeur VALUES(id.currval);
-INSERT INTO utilisateur VALUES(id.nextval, 'calyre', 'Allyre','Clément','clement.allyre@u-psud.fr');
+INSERT INTO utilisateur VALUES(id.nextval, 'calyre', 'Allyre','Clément','clement.allyre@u-psud.fr', 'password');
 INSERT INTO professeur VALUES(id.currval);
-INSERT INTO utilisateur VALUES(id.nextval, 'tamelin', 'Amelin','Thibault','amelinTh78@u-psud.fr');
+INSERT INTO admin VALUES (id.currval);
+INSERT INTO utilisateur VALUES(id.nextval, 'tamelin', 'Amelin','Thibault','amelinTh78@u-psud.fr', 'password');
 INSERT INTO professeur VALUES(id.currval);
-INSERT INTO utilisateur VALUES(id.nextval, 'landreone', 'Andreone','Luc','lucAnd@gmail.com');
+INSERT INTO utilisateur VALUES(id.nextval, 'landreone', 'Andreone','Luc','lucAnd@gmail.com', 'password');
 INSERT INTO professeur VALUES(id.currval);
-INSERT INTO utilisateur VALUES(id.nextval, 'yantoine', 'Antoine','Yoann','antoine.yoann@gmail.com');
+INSERT INTO utilisateur VALUES(id.nextval, 'yantoine', 'Antoine','Yoann','antoine.yoann@gmail.com', 'password');
 INSERT INTO professeur VALUES(id.currval);
-INSERT INTO utilisateur VALUES(id.nextval, 'raublanc', 'Aublanc','Romain','aublancR@hotmail.fr');
+INSERT INTO utilisateur VALUES(id.nextval, 'raublanc', 'Aublanc','Romain','aublancR@hotmail.fr', 'password');
 INSERT INTO professeur VALUES(id.currval);
-INSERT INTO utilisateur VALUES(id.nextval, 'aauzolie', 'Auzolie','Arthur','auzolarthur@yahoo.fr');
+INSERT INTO utilisateur VALUES(id.nextval, 'aauzolie', 'Auzolie','Arthur','auzolarthur@yahoo.fr', 'password');
 INSERT INTO professeur VALUES(id.currval);
-INSERT INTO utilisateur VALUES(id.nextval, 'cblanchard', 'Blanchard','Clément','clemblanchard@gmail.com');
+INSERT INTO utilisateur VALUES(id.nextval, 'cblanchard', 'Blanchard','Clément','clemblanchard@gmail.com', 'password');
 INSERT INTO professeur VALUES(id.currval);
-INSERT INTO utilisateur VALUES(id.nextval, 'pboiron', 'Boiron','Pierre','boironPierre@upmc.fr');
+INSERT INTO utilisateur VALUES(id.nextval, 'pboiron', 'Boiron','Pierre','boironPierre@upmc.fr', 'password');
 INSERT INTO professeur VALUES(id.currval);
-INSERT INTO utilisateur VALUES(id.nextval, 'agratton', 'Gratton','alexandre','alex.gratton@gmail.com');
+INSERT INTO utilisateur VALUES(id.nextval, 'agratton', 'Gratton','alexandre','alex.gratton@gmail.com', 'password');
 INSERT INTO professeur VALUES(id.currval);
-INSERT INTO utilisateur VALUES(id.nextval, 'mgrenier', 'Grenier','Maxime','maximegrenier@u-psud.fr');
+INSERT INTO utilisateur VALUES(id.nextval, 'mgrenier', 'Grenier','Maxime','maximegrenier@u-psud.fr', 'password');
 INSERT INTO professeur VALUES(id.currval);
 
 -- FORMATIONS
@@ -60,43 +61,43 @@ create sequence num start with 211000;
 create sequence gr;
 
 INSERT INTO groupe VALUES(gr.nextval, 'Info 2014');
-	INSERT INTO utilisateur VALUES(id.nextval, 'abouaziz', 'Bouaziz','alexandra','alexandra.bouaziz56@live.fr');
+	INSERT INTO utilisateur VALUES(id.nextval, 'abouaziz', 'Bouaziz','alexandra','alexandra.bouaziz56@live.fr', 'password');
 	INSERT INTO etudiant VALUES(id.currval, num.nextval);
 		INSERT INTO etudiant_dans_groupe VALUES(id.currval, gr.currval);
-	INSERT INTO utilisateur VALUES(id.nextval, 'sbouguila', 'Bouguila','Selma','selmaBouguila@u-p8.fr');
+	INSERT INTO utilisateur VALUES(id.nextval, 'sbouguila', 'Bouguila','Selma','selmaBouguila@u-p8.fr', 'password');
 	INSERT INTO etudiant VALUES(id.currval, num.nextval);
 		INSERT INTO etudiant_dans_groupe VALUES(id.currval, gr.currval);
-	INSERT INTO utilisateur VALUES(id.nextval, 'abrand', 'Brand','Alexis','brand-Alex@gmail.com');
+	INSERT INTO utilisateur VALUES(id.nextval, 'abrand', 'Brand','Alexis','brand-Alex@gmail.com', 'password');
 	INSERT INTO etudiant VALUES(id.currval, num.nextval);
 		INSERT INTO etudiant_dans_groupe VALUES(id.currval, gr.currval);
-	INSERT INTO utilisateur VALUES(id.nextval, 'mcamara', 'Camara','Moussa','moussC@live.fr');
+	INSERT INTO utilisateur VALUES(id.nextval, 'mcamara', 'Camara','Moussa','moussC@live.fr', 'password');
 	INSERT INTO etudiant VALUES(id.currval, num.nextval);
 		INSERT INTO etudiant_dans_groupe VALUES(id.currval, gr.currval);
-	INSERT INTO utilisateur VALUES(id.nextval, 'cchaux', 'Chaux','christine','chris.chaux@yahoo.fr');
+	INSERT INTO utilisateur VALUES(id.nextval, 'cchaux', 'Chaux','christine','chris.chaux@yahoo.fr', 'password');
 	INSERT INTO etudiant VALUES(id.currval, num.nextval);
 		INSERT INTO etudiant_dans_groupe VALUES(id.currval, gr.currval);
-	INSERT INTO utilisateur VALUES(id.nextval, 'econin', 'Conin','Elisa','conin.Elisa91@gmail.com');
+	INSERT INTO utilisateur VALUES(id.nextval, 'econin', 'Conin','Elisa','conin.Elisa91@gmail.com', 'password');
 	INSERT INTO etudiant VALUES(id.currval, num.nextval);
 		INSERT INTO etudiant_dans_groupe VALUES(id.currval, gr.currval);
-	INSERT INTO utilisateur VALUES(id.nextval, 'jcorvisard', 'Corvisard','Julie','julie.corvisard@u-p8.fr');
+	INSERT INTO utilisateur VALUES(id.nextval, 'jcorvisard', 'Corvisard','Julie','julie.corvisard@u-p8.fr', 'password');
 	INSERT INTO etudiant VALUES(id.currval, num.nextval);
 		INSERT INTO etudiant_dans_groupe VALUES(id.currval, gr.currval);
-	INSERT INTO utilisateur VALUES(id.nextval, 'adesjardins', 'Desjardins','Alexandra','alexandra.desjardins@u-psud.fr');
+	INSERT INTO utilisateur VALUES(id.nextval, 'adesjardins', 'Desjardins','Alexandra','alexandra.desjardins@u-psud.fr', 'password');
 	INSERT INTO etudiant VALUES(id.currval, num.nextval);
 		INSERT INTO etudiant_dans_groupe VALUES(id.currval, gr.currval);
-	INSERT INTO utilisateur VALUES(id.nextval, 'jdianas', 'Dianas','Julien','dianajuju@gmail.com');
+	INSERT INTO utilisateur VALUES(id.nextval, 'jdianas', 'Dianas','Julien','dianajuju@gmail.com', 'password');
 	INSERT INTO etudiant VALUES(id.currval, num.nextval);
 		INSERT INTO etudiant_dans_groupe VALUES(id.currval, gr.currval);
-	INSERT INTO utilisateur VALUES(id.nextval, 'ndinouel', 'Dinouel','Natha','didiNatha78@wanadoo.fr');
+	INSERT INTO utilisateur VALUES(id.nextval, 'ndinouel', 'Dinouel','Natha','didiNatha78@wanadoo.fr', 'password');
 	INSERT INTO etudiant VALUES(id.currval, num.nextval);
 		INSERT INTO etudiant_dans_groupe VALUES(id.currval, gr.currval);
-	INSERT INTO utilisateur VALUES(id.nextval, 'rdonckers', 'Donckers','Rémi','donckers.remi@upmc.fr');
+	INSERT INTO utilisateur VALUES(id.nextval, 'rdonckers', 'Donckers','Rémi','donckers.remi@upmc.fr', 'password');
 	INSERT INTO etudiant VALUES(id.currval, num.nextval);
 		INSERT INTO etudiant_dans_groupe VALUES(id.currval, gr.currval);
-	INSERT INTO utilisateur VALUES(id.nextval, 'meuphrosine', 'Euphrosine','Mélissa','euphrosine.melissa@upmc.fr');
+	INSERT INTO utilisateur VALUES(id.nextval, 'meuphrosine', 'Euphrosine','Mélissa','euphrosine.melissa@upmc.fr', 'password');
 	INSERT INTO etudiant VALUES(id.currval, num.nextval);
 		INSERT INTO etudiant_dans_groupe VALUES(id.currval, gr.currval);
-	INSERT INTO utilisateur VALUES(id.nextval, 'cfleury', 'Fleury','Cédric','cedric.quentin@u-psud.fr');
+	INSERT INTO utilisateur VALUES(id.nextval, 'cfleury', 'Fleury','Cédric','cedric.quentin@u-psud.fr', 'password');
 	INSERT INTO etudiant VALUES(id.currval, num.nextval);
 		INSERT INTO etudiant_dans_groupe VALUES(id.currval, gr.currval);
 
@@ -233,7 +234,7 @@ INSERT INTO enseignement VALUES(ens.nextval,1 , 'Programmation OO',2, 3);
 		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
 		(note.nextval, etu.nextval,1, ens.currval, 'Interro de Programmation n°1', to_date('2014-10-05', 'YYYY-MM-DD'), 10, 1, 'CC');
 		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
-		(note.nextval, etu.nextval,1, ens.currval, 'Interro de Programmationn°1', to_date('2014-10-05', 'YYYY-MM-DD'), 15, 1, 'CC');
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro de Programmation n°1', to_date('2014-10-05', 'YYYY-MM-DD'), 15, 1, 'CC');
 		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
 		(note.nextval, etu.nextval,1, ens.currval, 'Interro de Programmation n°1', to_date('2014-10-05', 'YYYY-MM-DD'), 7, 1, 'CC');
 		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
@@ -309,7 +310,7 @@ INSERT INTO enseignement VALUES(ens.nextval,1 , 'Programmation OO',2, 3);
 		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
 		(note.nextval, etu.nextval,1, ens.currval, 'Partiel de Programmation', to_date('2014-12-15', 'YYYY-MM-DD'), 10.5, 1, 'DS');
 		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
-		(note.nextval, etu.nextval,1, ens.currval, 'Interro de Programmation', to_date('2014-12-15', 'YYYY-MM-DD'), 13, 1, 'DS');
+		(note.nextval, etu.nextval,1, ens.currval, 'Partiel de Programmation', to_date('2014-12-15', 'YYYY-MM-DD'), 13, 1, 'DS');
 
 INSERT INTO enseignement VALUES(ens.nextval,2 , 'Programmation OO',2, 3);
 	INSERT INTO groupe_suit_enseignement(id_groupe, id_enseignement) VALUES (gr.currval, ens.currval);
@@ -317,7 +318,7 @@ INSERT INTO enseignement VALUES(ens.nextval,2 , 'Programmation OO',2, 3);
 		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
 		(note.nextval, etu.nextval,1, ens.currval, 'Interro de Programmation n°1', to_date('2015-02-05', 'YYYY-MM-DD'), 14, 1, 'CC');
 		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
-		(note.nextval, etu.nextval,1, ens.currval, 'Interro de Programmationn°1', to_date('2015-02-05', 'YYYY-MM-DD'), 12, 1, 'CC');
+		(note.nextval, etu.nextval,1, ens.currval, 'Interro de Programmation n°1', to_date('2015-02-05', 'YYYY-MM-DD'), 12, 1, 'CC');
 		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES
 		(note.nextval, etu.nextval,1, ens.currval, 'Interro de Programmation n°1', to_date('2015-02-05', 'YYYY-MM-DD'), 14, 1, 'CC');
 		INSERT INTO notes(id_note, id_user, id_groupe, id_enseignement, libelle_interrogation, date_interrogation, valeur_note, coef_note, type_note) VALUES

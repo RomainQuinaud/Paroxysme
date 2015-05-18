@@ -1,5 +1,4 @@
 
-
 drop table STATS_SEMESTRE_ETUDIANT;
 drop table STATS_ENSEIGNEMENT_ETUDIANT;
 drop table NOTES;
@@ -13,6 +12,7 @@ drop table MATIERE;
 drop table SEMESTRE;
 drop table FORMATION;
 drop table PROFESSEUR;
+drop table ADMIN;
 drop table UTILISATEUR;
 
 
@@ -23,6 +23,7 @@ drop sequence gr;
 drop sequence etu;
 drop sequence ens;
 drop sequence note;
+
 
 
 
@@ -49,10 +50,17 @@ CREATE TABLE UTILISATEUR (
 	nom_user VARCHAR2(30),
 	prenom_user VARCHAR2(30),
 	mail_user VARCHAR2(100),
+	password_user VARCHAR2(100),
 	CONSTRAINT PK_USER PRIMARY KEY (id_user), 
 	CONSTRAINT UNIQUE_UTILISATEUR_LOGIN UNIQUE(login)
 	);
 
+
+CREATE TABLE ADMIN (
+	id_user INTEGER,
+	CONSTRAINT PK_ADMIN PRIMARY KEY (id_user),
+	CONSTRAINT FK_ADMIN_USER FOREIGN KEY (id_user) REFERENCES UTILISATEUR(id_user)
+	);
 
 CREATE TABLE PROFESSEUR (
 	id_user INTEGER,
@@ -229,6 +237,8 @@ CREATE TABLE STATS_SEMESTRE_ETUDIANT (
 -- drop table FORMATION;
 -- drop table PROFESSEUR;
 -- drop table UTILISATEUR;
+
+
 
 
 CREATE OR REPLACE PACKAGE FONCTIONS_UTILES IS
@@ -632,6 +642,9 @@ END STATISTIQUES;
 
 
 
+
+
+
 --@Jeanne & Laurence
 -- Trigger qui met à jour les statistiques sur les moyennes de l'étudiant après insertion d'une note
 CREATE OR REPLACE TRIGGER calcul_moy_etu_ens_when_insert
@@ -928,6 +941,34 @@ END;
 	-- Ca marche
 
 
+BEGIN
+    DBMS_SCHEDULER.DROP_JOB(job_name => 'MAJ_SEMESTERS',
+                                defer => false,
+                                force => false);
+END;
+/
+
+
+begin
+  dbms_scheduler.create_job (
+    job_name => 'MAJ_SEMESTERS',  -- Choose some name. 
+    job_type => 'PLSQL_BLOCK',
+    job_action => 'begin Fonctions_Utiles.open_semester; Fonctions_Utiles.close_semester; end;',
+    start_date => SYSDATE,
+    repeat_interval => 'FREQ=DAILY',
+    enabled => TRUE,
+    comments => 'Daily update of semesters'
+    );
+end;
+/
+
+
+
+BEGIN
+  FONCTIONS_UTILES.OPEN_SEMESTER();
+  FONCTIONS_UTILES.CLOSE_SEMESTER();
+END;
+/
 
 
 

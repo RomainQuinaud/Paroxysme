@@ -11,6 +11,7 @@ drop table MATIERE;
 drop table SEMESTRE;
 drop table FORMATION;
 drop table PROFESSEUR;
+drop table ADMIN;
 drop table UTILISATEUR;
 
 

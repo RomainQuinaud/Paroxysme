@@ -23,4 +23,5 @@ delete from MATIERE;
 delete from SEMESTRE;
 delete from FORMATION;
 delete from PROFESSEUR;
+delete from ADMIN;
 delete from UTILISATEUR;

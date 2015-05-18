@@ -6,10 +6,17 @@ CREATE TABLE UTILISATEUR (
 	nom_user VARCHAR2(30),
 	prenom_user VARCHAR2(30),
 	mail_user VARCHAR2(100),
+	password_user VARCHAR2(100),
 	CONSTRAINT PK_USER PRIMARY KEY (id_user), 
 	CONSTRAINT UNIQUE_UTILISATEUR_LOGIN UNIQUE(login)
 	);
 
+
+CREATE TABLE ADMIN (
+	id_user INTEGER,
+	CONSTRAINT PK_ADMIN PRIMARY KEY (id_user),
+	CONSTRAINT FK_ADMIN_USER FOREIGN KEY (id_user) REFERENCES UTILISATEUR(id_user)
+	);
 
 CREATE TABLE PROFESSEUR (
 	id_user INTEGER,
@@ -73,6 +80,7 @@ CREATE TABLE ENSEIGNEMENT (
 CREATE TABLE GROUPE (
 	id_groupe INTEGER NOT NULL,
 	nom_groupe VARCHAR2(10),
+	CONSTRAINT UNIQUE_GROUPE UNIQUE(nom_groupe),
 	CONSTRAINT PK_GROUPE PRIMARY KEY (id_groupe) -- il y aura plein de groupe de nom "AS" par exemple (un par an en fait) mais avec une id différente et donc suivant des enseignements d'id différents
 	);
 
