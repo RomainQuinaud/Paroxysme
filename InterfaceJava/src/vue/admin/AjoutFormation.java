@@ -5,8 +5,10 @@ import modele.Modele;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -27,6 +29,7 @@ public class AjoutFormation extends JDialog {
     private Modele modele;
 
     private int idSemestre;
+    private JComboBox<String> listeProf;
 
 
     public AjoutFormation(JFrame parent, Modele modele) {
@@ -112,17 +115,17 @@ public class AjoutFormation extends JDialog {
 
         for (int i = 2; i <= 8; i++)
             Tsemestres.addItem(i);
-            Tsemestres.setRenderer(new MyComboBoxRenderer("Veuillez choisir le nombre de semestres"));
-            Tsemestres.setSelectedIndex(-1);
-            Tsemestres.addItemListener(new ItemListener() {
+        Tsemestres.setRenderer(new MyComboBoxRenderer("Veuillez choisir le nombre de semestres"));
+        Tsemestres.setSelectedIndex(-1);
+        Tsemestres.addItemListener(new ItemListener() {
                                        @Override
                                        public void itemStateChanged(ItemEvent e) {
 
                                            if (Tsemestres.getSelectedIndex() != -1)
-                                               validerFormation.setEnabled(true);
+                                               listeProf.setEnabled(true);
 
                                            else
-                                               validerFormation.setEnabled(false);
+                                               listeProf.setEnabled(false);
                                        }
 
 
@@ -132,18 +135,54 @@ public class AjoutFormation extends JDialog {
         Tsemestres.setEnabled(false);
 
 
+        /* Liste professeur */
+
+        listeProf = new JComboBox<String>();
+
+        try {
+            ArrayList<Integer> idProfs = modele.getListeProfesseurs();
+
+            for (int i : idProfs) {
+                listeProf.addItem(i + ":" + modele.getPrenomNomFromID(i));
+            }
+            listeProf.setRenderer(new MyComboBoxRenderer("Veuillez choisir le professeur responsable"));
+            listeProf.setSelectedIndex(-1);
+            listeProf.setEnabled(false);
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        JLabel profs=new JLabel("Professeur Responsable: ");
+        listeProf.addItemListener(new ItemListener() {
+                                      @Override
+                                      public void itemStateChanged(ItemEvent e) {
+
+                                          if (listeProf.getSelectedIndex() != -1)
+                                              validerFormation.setEnabled(true);
+
+                                          else
+                                              validerFormation.setEnabled(false);
+                                      }
+
+
+                                  }
+        );
+        formulaire.add(profs, "cell 0 3 1");
+        formulaire.add(listeProf, "cell 1 3 2");
+
+
         /* Validation formation */
 
         validerFormation = new JButton("Valider Formation");
         validerFormation.setEnabled(false);
-        formulaire.add(validerFormation, "cell 2 3");
+        formulaire.add(validerFormation, "cell 2 4");
 
         annuler = new JButton("Annuler");
 
-        formulaire.add(annuler, "cell 2 3");
+        formulaire.add(annuler, "cell 2 4");
 
         toutValider = new JButton("Tout valider");
-        formulaire.add(toutValider, "cell 2 3");
+        formulaire.add(toutValider, "cell 2 4");
         toutValider.setEnabled(false);
         toutValider.addActionListener(new ActionListener() {
             @Override
@@ -175,7 +214,7 @@ public class AjoutFormation extends JDialog {
 
                 if (!Tnomformation.getText().equals("")) {
 
-                    modele.ajoutFormation(Tnomformation.getText(), (int) Tdate.getSelectedItem());
+                    modele.ajoutFormation(Tnomformation.getText(), (int) Tdate.getSelectedItem(),Integer.parseInt( listeProf.getSelectedItem().toString().split(":")[0]));
                     validerFormation.setEnabled(false);
                     Tsemestres.setEnabled(false);
                     Tdate.setEnabled(false);
@@ -361,10 +400,17 @@ public class AjoutFormation extends JDialog {
     private void activateSemestre() {
 
         if (Tdate.getSelectedIndex() != -1 && !Tnomformation.getText().equals("")) {
-            if (modele.checkFormationDispo(Tnomformation.getText().replaceAll("[\n\r\t]", ""), (int) Tdate.getSelectedItem()))
+            if (modele.checkFormationDispo(Tnomformation.getText().replaceAll("[\n\r\t]", ""), (int) Tdate.getSelectedItem())) {
                 Tsemestres.setEnabled(true);
+                listeProf.setEnabled(true);
+
+            }
             else
+            {
                 Tsemestres.setEnabled(false);
+                listeProf.setEnabled(false);
+            }
+
         }
     }
 
@@ -388,10 +434,14 @@ public class AjoutFormation extends JDialog {
             _title = title;
         }
 
+
         @Override
         public Component getListCellRendererComponent(JList list, Object value,
                                                       int index, boolean isSelected, boolean hasFocus) {
+            this.setBorder(new EmptyBorder(5,5,5,5));
             if (index == -1 && value == null) setText(_title);
+
+
             else setText(value.toString());
             return this;
         }

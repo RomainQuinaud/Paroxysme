@@ -208,16 +208,18 @@ public class Modele {
     }
 
 
-    public void ajoutFormation(String nom,int annee)
+    public void ajoutFormation(String nom,int annee,int prof)
     {
 
-        String requete = "INSERT INTO FORMATION (NOM_FORMATION,ANNEE_FORMATION) VALUES (?,?)";
+        String requete = "INSERT INTO FORMATION (NOM_FORMATION,ANNEE_FORMATION,ID_PROF_RESPONSABLE) VALUES (?,?,?)";
         PreparedStatement stm = null;
         try {
 
             stm = conn.prepareStatement(requete);
             stm.setString(1, nom);
             stm.setInt(2, annee);
+            stm.setInt(3, prof);
+
             ResultSet result = null;
             result = stm.executeQuery();
             conn.commit();
