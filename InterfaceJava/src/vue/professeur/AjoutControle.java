@@ -30,6 +30,9 @@ public class AjoutControle extends JDialog implements ActionListener{
 
     public AjoutControle(JFrame parent, Modele modele, int enseignement, int groupe, int mode, String libelleInterro){
         super(parent, "Ajouter une interrogation", true);
+        if (mode == 1) {
+            this.setTitle("Modifiler l'interrogation");
+        }
         this.parent = parent;
         this.setResizable(false);
         this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);

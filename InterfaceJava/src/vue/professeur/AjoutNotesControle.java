@@ -31,6 +31,8 @@ public class AjoutNotesControle extends JDialog {
     private JPanel[] tabJpanelUneNote;
     private JLabel[] tabJLabelsID;
     private JTextField[] tabJTextFieldNote;
+    private JCheckBox[] tabCheckBoxesABS;
+    private JCheckBox[] tabCheckBoxesABSJ;
 
 
 
@@ -77,6 +79,10 @@ public class AjoutNotesControle extends JDialog {
         tabJpanelUneNote = new JPanel[nbEleves];
         tabJLabelsID = new JLabel[nbEleves];
         tabJTextFieldNote = new JTextField[nbEleves];
+        tabCheckBoxesABS = new JCheckBox[nbEleves];
+        tabCheckBoxesABSJ = new JCheckBox[nbEleves];
+
+
 
         for (int i=0; i<nbEleves; i++) {
             tabJpanelUneNote[i] = new JPanel(new FlowLayout());
@@ -101,9 +107,40 @@ public class AjoutNotesControle extends JDialog {
             tabJTextFieldNote[i].setPreferredSize(new Dimension(60, 35));
             tabJTextFieldNote[i].setHorizontalAlignment(SwingConstants.RIGHT);
 
+            tabCheckBoxesABS[i] = new JCheckBox("ABS");
+            tabCheckBoxesABS[i].setSelected(false);
+            tabCheckBoxesABSJ[i] = new JCheckBox("ABS J.");
+            tabCheckBoxesABSJ[i].setSelected(false);
+
+
+
+
             if (mode == 1) { // on modifie une interro
                 try {
-                    tabJTextFieldNote[i].setText(""+modele.getNoteForIDEleve(ancienLibelle, idGroupe, idEnseignement, idEleves[i]));
+                    if (modele.eleveABSInterro(ancienLibelle, idGroupe, idEnseignement, idEleves[i])==1) {
+                        if (modele.eleveABSJustifieInterro(ancienLibelle, idGroupe, idEnseignement, idEleves[i])==1) {
+                            tabJTextFieldNote[i].setEnabled(false);
+                            tabCheckBoxesABS[i].setSelected(false);
+                            tabCheckBoxesABS[i].setEnabled(false);
+                            tabCheckBoxesABSJ[i].setSelected(true);
+                            // abscence justifiée
+                        }
+                        else {
+                            tabJTextFieldNote[i].setEnabled(false);
+                            tabCheckBoxesABS[i].setSelected(true);
+                            tabCheckBoxesABS[i].setEnabled(true);
+                            tabCheckBoxesABSJ[i].setSelected(false);
+                            tabCheckBoxesABSJ[i].setEnabled(false);
+                            // absence
+                        }
+                    }
+                    else {
+                        tabJTextFieldNote[i].setText("" + modele.getNoteForIDEleve(ancienLibelle, idGroupe, idEnseignement, idEleves[i]));
+                        tabCheckBoxesABS[i].setSelected(false);
+                        tabCheckBoxesABS[i].setEnabled(false);
+                        tabCheckBoxesABSJ[i].setSelected(false);
+                        tabCheckBoxesABSJ[i].setEnabled(false);
+                    }
                 }
                 catch (SQLException exp) {
                     System.err.println("Set text note dans tabJTextFieldNote appel getNoteForIDEleve -> "+exp.getMessage());
@@ -112,6 +149,8 @@ public class AjoutNotesControle extends JDialog {
                     e.printStackTrace();
                 }
             }
+
+
             tabJTextFieldNote[i].getDocument().addDocumentListener(new DocumentListener() {
                 @Override
                 public void insertUpdate(DocumentEvent e) {
@@ -130,11 +169,31 @@ public class AjoutNotesControle extends JDialog {
             });
 
 
+            tabCheckBoxesABS[i].addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    updateCheckBox();
+                    updateBoutonValider();
+                }
+            });
+            tabCheckBoxesABSJ[i].addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    updateCheckBox();
+                    updateBoutonValider();
+                }
+            });
+
+
+
             tabJLabelsID[i] = new JLabel();
             tabJLabelsID[i].setName(""+idEleves[i]); // id de l'élève
 
             tabJpanelUneNote[i].add(unLabel);
             tabJpanelUneNote[i].add(tabJTextFieldNote[i]);
+            tabJpanelUneNote[i].add(tabCheckBoxesABS[i]);
+            tabJpanelUneNote[i].add(tabCheckBoxesABSJ[i]);
+
             panelNotes.add(tabJpanelUneNote[i]);
         }
         JScrollPane scrollNotes = new JScrollPane(panelNotes, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -194,25 +253,67 @@ public class AjoutNotesControle extends JDialog {
     }
 
 
-
-
-    private boolean validerOK () {
-        for (int i=0; i<tabJTextFieldNote.length; i++) {
-            try {
-                String note = tabJTextFieldNote[i].getText();
-                if (note.equals("")) {
-                    return false;
-                } else if (Float.parseFloat(note) < 0 || Float.parseFloat(note) > 20) {
-                    return false;
-                }
-            }
-            catch (Exception e) {
+    private boolean noteCorrecte (String note) {
+        try {
+            if (note.equals("")) {
+                return false;
+            } else if (Float.parseFloat(note) < 0 || Float.parseFloat(note) > 20) {
                 return false;
             }
+        } catch (Exception e) {
+            return false;
         }
         return true;
     }
 
+
+    private boolean validerOK () {
+        boolean test = false;
+        for (int i=0; i<tabJTextFieldNote.length; i++) {
+            if (noteCorrecte(tabJTextFieldNote[i].getText())) {
+                if (!tabCheckBoxesABS[i].isSelected() && !tabCheckBoxesABSJ[i].isSelected()) // note correcte aucune checkbox
+                    test = true;
+            }
+            else if (!noteCorrecte(tabJTextFieldNote[i].getText()) && (tabCheckBoxesABS[i].isSelected() || tabCheckBoxesABSJ[i].isSelected())) {
+                test = true;
+            }
+            else {
+                test = false;
+            }
+        }
+        return test;
+    }
+
+
+    private void updateCheckBox () {
+        for (int i=0; i<tabJTextFieldNote.length; i++) {
+            if (tabCheckBoxesABS[i].isSelected()) {
+                tabCheckBoxesABSJ[i].setSelected(false);
+                tabCheckBoxesABSJ[i].setEnabled(false);
+                tabJTextFieldNote[i].setEnabled(false);
+                tabJTextFieldNote[i].setText("");
+
+            }
+            else if (tabCheckBoxesABSJ[i].isSelected()) {
+                tabCheckBoxesABS[i].setEnabled(false);
+                tabCheckBoxesABS[i].setSelected(false);
+                tabJTextFieldNote[i].setEnabled(false);
+                tabJTextFieldNote[i].setText("");
+            }
+            else if (!tabCheckBoxesABS[i].isSelected()) {
+                tabCheckBoxesABS[i].setEnabled(true);
+                tabCheckBoxesABSJ[i].setEnabled(true);
+                tabJTextFieldNote[i].setEnabled(true);
+            }
+
+            else if (!tabCheckBoxesABSJ[i].isSelected()) {
+                tabCheckBoxesABS[i].setEnabled(true);
+                tabCheckBoxesABSJ[i].setEnabled(true);
+                tabCheckBoxesABSJ[i].setSelected(false);
+                tabJTextFieldNote[i].setEnabled(true);
+            }
+        }
+    }
 
     private void updateBoutonValider () {
         if (validerOK())
@@ -237,7 +338,7 @@ public class AjoutNotesControle extends JDialog {
     private void insererLesNotes (int i) {
         if (mode == 1) {// updates
             try {
-                modele.updateNote(Float.parseFloat(tabJTextFieldNote[i].getText()), idEleves[i], idGroupe, idEnseignement, libelleInterro);
+                modele.updateNote(Float.parseFloat(tabJTextFieldNote[i].getText()), idEleves[i], idGroupe, idEnseignement, libelleInterro, getAbsent(i), getAbsentJustifie(i));
                 dispose();
             }
             catch (SQLException e) {
@@ -246,7 +347,12 @@ public class AjoutNotesControle extends JDialog {
         }
         else {
             try {
-                modele.insertNouvelleInterro(idEleves[i], idGroupe, idEnseignement, libelleInterro, dateInterro, Float.parseFloat(tabJTextFieldNote[i].getText()), coef, 0, 0, typeNote);
+                if (getAbsent(i)==0 && getAbsentJustifie(i)==0) {
+                    modele.insertNouvelleInterro(idEleves[i], idGroupe, idEnseignement, libelleInterro, dateInterro, Float.parseFloat(tabJTextFieldNote[i].getText()), coef, getAbsent(i), getAbsentJustifie(i), typeNote);
+                }
+                else {
+                    modele.insertNouvelleInterro(idEleves[i], idGroupe, idEnseignement, libelleInterro, dateInterro, 0, coef, getAbsent(i), getAbsentJustifie(i), typeNote);
+                }
                 dispose();
             }
             catch (SQLException e) {
@@ -255,5 +361,26 @@ public class AjoutNotesControle extends JDialog {
         }
     }
 
+    private int getAbsent (int i) {
+        if (tabCheckBoxesABS[i].isSelected()) {
+            return 1;
+        }
+        else {
+            return 0;
+        }
+    }
 
+    private int getAbsentJustifie (int i) {
+        if (tabCheckBoxesABSJ[i].isSelected()) {
+            return 1;
+        }
+        else {
+            return 0;
+        }
+    }
+
+
+    public static void main(String[] args) {
+        new AjoutNotesControle(null, new Modele(), 1, 1, 0, "", "test", "10/12/2012", 2, "CC");
+    }
 }

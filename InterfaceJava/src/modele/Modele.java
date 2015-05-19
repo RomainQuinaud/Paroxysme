@@ -804,13 +804,15 @@ public class Modele {
         ps.close();
     }
 
-    public void updateNote (float nouvelleNote, int idUser, int idGroupe, int idEnseignement, String libelle) throws SQLException {
-        PreparedStatement ps = conn.prepareStatement("UPDATE NOTES SET VALEUR_NOTE = ? WHERE ID_USER=? AND ID_GROUPE = ? AND ID_ENSEIGNEMENT = ? AND LIBELLE_INTERROGATION=?");
+    public void updateNote (float nouvelleNote, int idUser, int idGroupe, int idEnseignement, String libelle, int abs, int absJ) throws SQLException {
+        PreparedStatement ps = conn.prepareStatement("UPDATE NOTES SET VALEUR_NOTE = ?, ABSENT=?, ABSENCE_JUSTIFIEE=? WHERE ID_USER=? AND ID_GROUPE = ? AND ID_ENSEIGNEMENT = ? AND LIBELLE_INTERROGATION=?");
         ps.setFloat(1, nouvelleNote);
-        ps.setInt(2,idUser);
-        ps.setInt(3,idGroupe);
-        ps.setInt(4, idEnseignement);
-        ps.setString(5,libelle);
+        ps.setInt(2,abs);
+        ps.setInt(3,absJ);
+        ps.setInt(4,idUser);
+        ps.setInt(5,idGroupe);
+        ps.setInt(6, idEnseignement);
+        ps.setString(7,libelle);
         ps.executeUpdate();
         ps.close();
     }
@@ -862,6 +864,50 @@ public class Modele {
             result.close();
             stm.close();
             return note;
+        }
+        else {
+            result.close();
+            stm.close();
+            return -1;
+        }
+    }
+
+
+    public float eleveABSInterro (String libelle, int idGroupe, int idEnseignement, int idEleve) throws SQLException {
+        String requete = "SELECT ABSENT FROM NOTES WHERE LIBELLE_INTERROGATION=? AND ID_GROUPE=? AND ID_ENSEIGNEMENT=? AND ID_USER=?";
+        PreparedStatement stm = conn.prepareStatement(requete);
+        stm.setString(1, libelle);
+        stm.setInt(2, idGroupe);
+        stm.setInt(3, idEnseignement);
+        stm.setInt(4, idEleve);
+        ResultSet result = stm.executeQuery();
+        if (result.next()) {
+            int abs = result.getInt("ABSENT");
+            result.close();
+            stm.close();
+            return abs;
+        }
+        else {
+            result.close();
+            stm.close();
+            return -1;
+        }
+    }
+
+
+    public float eleveABSJustifieInterro (String libelle, int idGroupe, int idEnseignement, int idEleve) throws SQLException {
+        String requete = "SELECT ABSENCE_JUSTIFIEE FROM NOTES WHERE LIBELLE_INTERROGATION=? AND ID_GROUPE=? AND ID_ENSEIGNEMENT=? AND ID_USER=?";
+        PreparedStatement stm = conn.prepareStatement(requete);
+        stm.setString(1, libelle);
+        stm.setInt(2, idGroupe);
+        stm.setInt(3, idEnseignement);
+        stm.setInt(4, idEleve);
+        ResultSet result = stm.executeQuery();
+        if (result.next()) {
+            int abs = result.getInt("ABSENCE_JUSTIFIEE");
+            result.close();
+            stm.close();
+            return abs;
         }
         else {
             result.close();
