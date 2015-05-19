@@ -110,11 +110,11 @@ public class AjoutFormation extends JDialog {
 
         Tsemestres = new JComboBox();
 
-        for (int i = 8; i >= 2; i--)
+        for (int i = 2; i <= 8; i++)
             Tsemestres.addItem(i);
-        Tsemestres.setRenderer(new MyComboBoxRenderer("Veuillez choisir le nombre de semestres"));
-        Tsemestres.setSelectedIndex(-1);
-        Tsemestres.addItemListener(new ItemListener() {
+            Tsemestres.setRenderer(new MyComboBoxRenderer("Veuillez choisir le nombre de semestres"));
+            Tsemestres.setSelectedIndex(-1);
+            Tsemestres.addItemListener(new ItemListener() {
                                        @Override
                                        public void itemStateChanged(ItemEvent e) {
 

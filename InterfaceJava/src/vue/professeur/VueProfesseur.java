@@ -78,7 +78,7 @@ public class VueProfesseur extends JFrame {
         }
 
 
-        this.setSize(new Dimension(1000, 900));
+        this.setSize(new Dimension(1000, 950));
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout());
 

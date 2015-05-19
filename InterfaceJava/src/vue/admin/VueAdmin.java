@@ -32,7 +32,7 @@ public class VueAdmin extends JFrame {
         }
 
 
-        this.setSize(new Dimension(600, 300));
+        this.setSize(new Dimension(600, 350));
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout());
 
