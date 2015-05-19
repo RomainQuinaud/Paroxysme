@@ -79,7 +79,7 @@ CREATE TABLE ENSEIGNEMENT (
 
 CREATE TABLE GROUPE (
 	id_groupe INTEGER NOT NULL,
-	nom_groupe VARCHAR2(10),
+	nom_groupe VARCHAR2(40),
 	CONSTRAINT UNIQUE_GROUPE UNIQUE(nom_groupe),
 	CONSTRAINT PK_GROUPE PRIMARY KEY (id_groupe) -- il y aura plein de groupe de nom "AS" par exemple (un par an en fait) mais avec une id différente et donc suivant des enseignements d'id différents
 	);
